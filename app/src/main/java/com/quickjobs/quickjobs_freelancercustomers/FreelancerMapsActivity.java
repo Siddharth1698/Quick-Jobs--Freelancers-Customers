@@ -58,7 +58,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
-    private Button logoutfreelancer,mSettings;
+    private Button logoutfreelancer,mSettings,AcceptJobBtn,DeclineJobBtn;
     private String userid;
     private Boolean isLoggingOut = false;
     private LinearLayout mCustomerInfo;
@@ -88,6 +88,32 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         mCustomerAddress = (TextView)findViewById(R.id.customerDescription);
         mSettings = (Button)findViewById(R.id.settingsFreelancer);
         logoutfreelancer = (Button)findViewById(R.id.logoutFreelancer);
+        AcceptJobBtn = (Button)findViewById(R.id.AcceptJobBtn);
+        DeclineJobBtn = (Button)findViewById(R.id.DeclineJobBtn);
+
+
+        AcceptJobBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        DeclineJobBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                erasePolyLines();
+                pickUpMarker.remove();
+                FirebaseDatabase.getInstance().getReference("CustomerRequests").child(customerId).removeValue();
+                mCustomerInfo.setVisibility(View.GONE);
+                FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userid).child("CustomerRideId").removeValue();
+                FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("CustomerRequestDescs").setValue("");
+
+
+
+            }
+        });
 
 
         logoutfreelancer.setOnClickListener(new View.OnClickListener() {

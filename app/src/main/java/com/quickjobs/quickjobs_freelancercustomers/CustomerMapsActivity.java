@@ -122,7 +122,10 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         });
 
 
+
     }
+
+
 
     private void postJob() {
 
@@ -191,6 +194,43 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                             FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").setValue(job);
                             request.setText("Getting your freelancer...");
                             getClosestFreelancer();
+
+                            FirebaseDatabase.getInstance().getReference().child("CustomerRequests").child(customerId).addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                        ;
+
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                    mFreelancerInfo.setVisibility(View.GONE);
+                                    request.setText("Get Things Done");
+                                }
+
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+
+
+
+
+
 
                         }
 
