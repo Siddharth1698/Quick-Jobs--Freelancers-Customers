@@ -25,6 +25,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:visibility="gone"
+        android:id="@+id/startstopbtns"
+        android:layout_height="wrap_content">
+        <Button
+
+            android:id="@+id/fsb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start " />
+
+        <Button
+
+            android:id="@+id/fchat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="chat " />
+
+
+        <Button
+
+            android:id="@+id/fdb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decline " />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

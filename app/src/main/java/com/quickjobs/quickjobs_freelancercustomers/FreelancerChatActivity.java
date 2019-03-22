@@ -1,6 +1,7 @@
 package com.quickjobs.quickjobs_freelancercustomers;
 
 import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -37,11 +38,12 @@ public class FreelancerChatActivity extends AppCompatActivity {
     private String currentGroupName,currentDate,currentTime;
     private Toolbar mToolbar;
     private DatabaseReference userRef,groupNameRef,messageKeyRef;
-    private Button freelancerStartBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_freelancer);
+
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         userRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -59,13 +61,6 @@ public class FreelancerChatActivity extends AppCompatActivity {
         });
 
 
-//        freelancerStartBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(FreelancerChatActivity.this,FreelancerMapsActivity.class));
-//
-//            }
-//        });
 
 
     }

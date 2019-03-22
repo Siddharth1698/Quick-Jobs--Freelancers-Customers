@@ -5,29 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CustomerChatActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:id="@+id/startstopbtns"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_marginRight="60dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="start " />
 
-        <Button
-            android:id="@+id/freeDeclinebtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Decline " />
-    </LinearLayout>
-
-
-
+    <Button
+        android:id="@+id/CustomerStartBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="start "
+        android:visibility="gone" />
     <ScrollView
-        android:layout_below="@id/startstopbtns"
+
         android:id="@+id/my_Scroll_view"
         android:layout_width="match_parent"
 

@@ -6,15 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".FreelancerChatActivity">
 
-    <Button
-        android:id="@+id/CustomerStartBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="false"
-        android:text="start "
-        android:visibility="gone" />
+
+
+
+
+
 
     <ScrollView
+
         android:id="@+id/my_Scroll_view"
         android:layout_width="match_parent"
 

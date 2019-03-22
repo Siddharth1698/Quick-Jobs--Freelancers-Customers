@@ -59,10 +59,11 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     private Button logoutfreelancer,mSettings,AcceptJobBtn,DeclineJobBtn;
     private String userid;
     private Boolean isLoggingOut = false;
-    private LinearLayout mCustomerInfo;
+    public LinearLayout mCustomerInfo,startstopbtns;
     private ImageView mCustomerProfileImage;
     private TextView mCustomerName,mCustomerPhone,mCustomerAddress;
     private List<Polyline> polylines;
+    private Button freelancerStartBtn,freelancerDeclineBtn,fchat;
     private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
     private String customerId = "";
 
@@ -76,8 +77,10 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
+        startstopbtns = (LinearLayout)findViewById(R.id.startstopbtns);
+        freelancerStartBtn =(Button)findViewById(R.id.fsb) ;
+        freelancerDeclineBtn = (Button)findViewById(R.id.fdb) ;
+        fchat = (Button)findViewById(R.id.fchat);
 
         mCustomerInfo = (LinearLayout)findViewById(R.id.customerInfo);
         mCustomerProfileImage = (ImageView) findViewById(R.id.customerProfileImage);
@@ -94,11 +97,22 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
             @Override
             public void onClick(View view) {
                 FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).child(customerId).setValue(true);
+                startstopbtns.setVisibility(View.VISIBLE);
+                mCustomerInfo.setVisibility(View.GONE);
                 Intent intent = new Intent(FreelancerMapsActivity.this, FreelancerChatActivity.class);
                 startActivity(intent);
                 return;
 
 
+            }
+        });
+
+        fchat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(FreelancerMapsActivity.this, FreelancerChatActivity.class);
+                startActivity(intent);
+                return;
             }
         });
 
@@ -108,6 +122,24 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
                 declineJob();
                }
+        });
+
+
+
+        freelancerStartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mCustomerInfo.setVisibility(View.GONE);
+
+            }
+        });
+
+        freelancerDeclineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                declineJob();
+
+            }
         });
 
 
@@ -141,7 +173,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
     }
 
-    private void declineJob() {
+    public void declineJob() {
         erasePolyLines();
         customerId = "";
         if (pickUpMarker!=null){
@@ -149,6 +181,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         }
         FirebaseDatabase.getInstance().getReference("CustomerRequests").child(customerId).removeValue();
         mCustomerInfo.setVisibility(View.GONE);
+        startstopbtns.setVisibility(View.GONE);
         FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userid).child("CustomerRideId").removeValue();
         FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("CustomerRequestDescs").setValue("");
         FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).removeValue();
@@ -276,15 +309,17 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
     private void getRouteToMarkder(LatLng pickupLatLng) {
 
-        Routing routing = new Routing.Builder()
-                .key("AIzaSyAUHvnkNCxNZgu4FiCTPV4AxZRzyZltPYU")
-                .travelMode(AbstractRouting.TravelMode.DRIVING)
-                .withListener(this)
-                .alternativeRoutes(false)
-                .waypoints(new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude()),pickupLatLng)
-                .build();
-        routing.execute();
+        if( pickupLatLng!= null) {
 
+            Routing routing = new Routing.Builder()
+                    .key("AIzaSyAUHvnkNCxNZgu4FiCTPV4AxZRzyZltPYU")
+                    .travelMode(AbstractRouting.TravelMode.DRIVING)
+                    .withListener(this)
+                    .alternativeRoutes(false)
+                    .waypoints(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), pickupLatLng)
+                    .build();
+            routing.execute();
+        }
     }
 
 
