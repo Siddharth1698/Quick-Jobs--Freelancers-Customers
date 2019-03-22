@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:gravity="center"
+        android:id="@+id/startstopbtns"
         android:layout_height="wrap_content">
         <Button
             android:layout_marginRight="60dp"
@@ -26,6 +27,7 @@
 
 
     <ScrollView
+        android:layout_below="@id/startstopbtns"
         android:id="@+id/my_Scroll_view"
         android:layout_width="match_parent"
 

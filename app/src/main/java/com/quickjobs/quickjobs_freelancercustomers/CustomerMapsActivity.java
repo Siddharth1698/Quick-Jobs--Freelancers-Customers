@@ -126,7 +126,10 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         customerChatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 Intent intent=new Intent(CustomerMapsActivity.this,CustomerChatActivity.class);
+                intent.putExtra("freelancerFoundId", freelancerFoundId);
                 startActivity(intent);
                 return;
             }
@@ -207,7 +210,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                             getClosestFreelancer();
 
 
-                            FirebaseDatabase.getInstance().getReference().child("Chats").addChildEventListener(new ChildEventListener() {
+                            FirebaseDatabase.getInstance().getReference().child("Chats").child(freelancerFoundId).addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
@@ -217,12 +220,12 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                                 @Override
                                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                                    customerChatBtn.setVisibility(View.VISIBLE);
                                 }
 
                                 @Override
                                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                                    customerChatBtn.setVisibility(View.GONE);
                                 }
 
                                 @Override

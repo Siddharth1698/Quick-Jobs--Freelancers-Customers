@@ -93,7 +93,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         AcceptJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).child(customerId).setValue(true);
+                FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).setValue(true);
                 Intent intent = new Intent(FreelancerMapsActivity.this, FreelancerChatActivity.class);
                 startActivity(intent);
                 return;
@@ -151,6 +151,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         mCustomerInfo.setVisibility(View.GONE);
         FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userid).child("CustomerRideId").removeValue();
         FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("CustomerRequestDescs").setValue("");
+        FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).removeValue();
     }
 
     private void getAssignedCustomer() {
