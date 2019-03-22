@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
@@ -58,7 +59,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
-    private Button logout,request,settings;
+    private Button logout,request,settings,customerChatBtn;
     private LatLng pickuplocation;
     private String customerId = "",requestService;
     private Boolean requestbol = false;
@@ -82,6 +83,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         mFreelancerInfo = (LinearLayout)findViewById(R.id.freelancerInfo);
         mFreelancerProfileImage = (ImageView) findViewById(R.id.freelancerProfileImage);
         mFreelancerName = (TextView) findViewById(R.id.freelancerName);
+        customerChatBtn = (Button)findViewById(R.id.customerChatBtn);
 
         logout = (Button)findViewById(R.id.logoutCustomer);
         request = (Button)findViewById(R.id.request);
@@ -116,6 +118,15 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             public void onClick(View view) {
 
                 Intent intent=new Intent(CustomerMapsActivity.this,CustomerSettingsActivity.class);
+                startActivity(intent);
+                return;
+            }
+        });
+
+        customerChatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(CustomerMapsActivity.this,CustomerChatActivity.class);
                 startActivity(intent);
                 return;
             }
@@ -195,11 +206,43 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                             request.setText("Getting your freelancer...");
                             getClosestFreelancer();
 
+
+                            FirebaseDatabase.getInstance().getReference().child("Chats").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                    customerChatBtn.setVisibility(View.VISIBLE);
+
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
+
                             FirebaseDatabase.getInstance().getReference().child("CustomerRequests").child(customerId).addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                                        ;
+
 
                                 }
 
@@ -212,6 +255,8 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                                 public void onChildRemoved(DataSnapshot dataSnapshot) {
                                     mFreelancerInfo.setVisibility(View.GONE);
                                     request.setText("Get Things Done");
+                                    Toast.makeText(getApplicationContext(),"Freelancer cancelled your request...",Toast.LENGTH_SHORT);
+
                                 }
 
                                 @Override
@@ -284,7 +329,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                     getFreelancerLocation();
                     getFreelancerInfo();
-                    request.setText("Looking for FreelancerLocation");
+                    request.setText("Looking for Freelancer Location");
 
                 }
 

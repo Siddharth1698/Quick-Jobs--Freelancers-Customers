@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationListener;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -38,7 +37,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -95,6 +93,11 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         AcceptJobBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).child(customerId).setValue(true);
+                Intent intent = new Intent(FreelancerMapsActivity.this, FreelancerChatActivity.class);
+                startActivity(intent);
+                return;
+
 
             }
         });
@@ -103,16 +106,8 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
             @Override
             public void onClick(View view) {
 
-                erasePolyLines();
-                pickUpMarker.remove();
-                FirebaseDatabase.getInstance().getReference("CustomerRequests").child(customerId).removeValue();
-                mCustomerInfo.setVisibility(View.GONE);
-                FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userid).child("CustomerRideId").removeValue();
-                FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("CustomerRequestDescs").setValue("");
-
-
-
-            }
+                declineJob();
+               }
         });
 
 
@@ -137,7 +132,6 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
             public void onClick(View view) {
 
                 isLoggingOut=true;
-
                 Intent intent=new Intent(FreelancerMapsActivity.this,FreelancerSettingsActivity.class);
                 startActivity(intent);
                 return;
@@ -145,6 +139,18 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         });
 
 
+    }
+
+    private void declineJob() {
+        erasePolyLines();
+        customerId = "";
+        if (pickUpMarker!=null){
+            pickUpMarker.remove();
+        }
+        FirebaseDatabase.getInstance().getReference("CustomerRequests").child(customerId).removeValue();
+        mCustomerInfo.setVisibility(View.GONE);
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userid).child("CustomerRideId").removeValue();
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("CustomerRequestDescs").setValue("");
     }
 
     private void getAssignedCustomer() {
@@ -186,6 +192,8 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
     private void getAssignedCustomerInfo() {
         mCustomerInfo.setVisibility(View.VISIBLE);
+
+
 
 
         DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId);

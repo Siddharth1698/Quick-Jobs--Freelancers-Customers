@@ -31,7 +31,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:11.0.2'
     implementation 'com.google.android.gms:play-services-location:11.0.2'
     implementation 'com.firebase:geofire-android:2.1.1'
-    compile 'com.github.jd-alexander:library:1.1.0'
+    implementation 'com.github.jd-alexander:library:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     testImplementation 'junit:junit:4.12'
