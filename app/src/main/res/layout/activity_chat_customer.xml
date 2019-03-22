@@ -1,9 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CustomerChatActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_marginRight="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start " />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/freeDeclinebtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decline " />
+    </LinearLayout>
+
+
+
+    <ScrollView
+        android:id="@+id/my_Scroll_view"
+        android:layout_width="match_parent"
+
+        android:layout_above="@+id/my_linear_layout"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/group_chat_text_display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:textColor="@android:color/background_dark"
+                android:layout_marginStart="2dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginBottom="50dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/my_linear_layout"
+        android:orientation="horizontal">
+
+
+
+        <EditText
+            android:id="@+id/input_group_message"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:padding="17dp"
+            android:layout_height="wrap_content" />
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/send_messgae_btn"
+            android:src="@drawable/send_message"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
