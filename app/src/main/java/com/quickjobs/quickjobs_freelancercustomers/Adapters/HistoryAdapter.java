@@ -1,4 +1,4 @@
-package com.quickjobs.quickjobs_freelancercustomers.historyRecyclerView;
+package com.quickjobs.quickjobs_freelancercustomers.Adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.quickjobs.quickjobs_freelancercustomers.R;
+import com.quickjobs.quickjobs_freelancercustomers.Objects.HistoryObject;
+import com.quickjobs.quickjobs_freelancercustomers.ViewHolders.HistoryViewHolders;
 
 import java.util.List;
 

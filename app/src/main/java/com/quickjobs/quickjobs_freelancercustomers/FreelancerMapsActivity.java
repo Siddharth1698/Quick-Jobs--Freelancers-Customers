@@ -68,11 +68,13 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     private Boolean isLoggingOut = false;
     public LinearLayout mCustomerInfo,startstopbtns;
     private ImageView mCustomerProfileImage;
+    private float rideDistance;
     private TextView mCustomerName,mCustomerPhone,mCustomerAddress;
     private List<Polyline> polylines;
+    private int distance = 0;
     private Button mJobStatus,freelancerDeclineBtn,fchat,freelancerhistorybtn;
     private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
-    private String customerId = "";
+    private String customerId = "", desc = "";
     private int status = 0;
 
     @Override
@@ -236,12 +238,12 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         map.put("customer", customerId);
         map.put("rating", 0);
         map.put("timestamp", getCurrentTimestamp());
-        map.put("destination", "jobdesctobeupdatedhere");
+        map.put("destination",desc);
         map.put("location/from/lat", pickupLatLng.latitude);
         map.put("location/from/lng", pickupLatLng.longitude);
         map.put("location/to/lat", lastLatLng.latitude);
         map.put("location/to/lng", lastLatLng.longitude);
-        map.put("distance", "5km");
+        map.put("distance", distance);
         historyRef.child(requestId).updateChildren(map);
     }
 
@@ -259,6 +261,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
             DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userId).child("CustomerRequest");
             freelancerRef.setValue(true);
+        rideDistance = 0;
 
 
 
@@ -318,6 +321,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                     status = 1;
                     customerId = dataSnapshot.getValue().toString();
                     getAssignedCustomerPickUpLocation();
+                    getAssignedCustomerDesc();
                     getAssignedCustomerInfo();
                 }else {
                    endJob();
@@ -333,7 +337,25 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         });
 
     }
+    private void getAssignedCustomerDesc(){
+        DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("CustomerRequestDescs");
+        assignedCustomerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    desc = dataSnapshot.getValue().toString();
+                }
+                    else{
 
+                    }
+                }
+
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 
     private void getAssignedCustomerInfo() {
         mCustomerInfo.setVisibility(View.VISIBLE);
@@ -424,7 +446,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         if( pickupLatLng!= null) {
 
             lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-
+            if (pickupLatLng != null && mLastLocation != null){
             Routing routing = new Routing.Builder()
                     .key("AIzaSyAUHvnkNCxNZgu4FiCTPV4AxZRzyZltPYU")
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
@@ -433,7 +455,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                     .waypoints(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), pickupLatLng)
                     .build();
             routing.execute();
-        }
+        }}
     }
 
 
@@ -498,10 +520,17 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
         if (getApplicationContext()!= null){
 
+
+
             mLastLocation = location;
             LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+
+
+            if(!customerId.equals("") && mLastLocation!=null && location != null){
+                rideDistance += mLastLocation.distanceTo(location)/1000;
+            }
 
             DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("FreelancersAvailable");
             DatabaseReference refWorking = FirebaseDatabase.getInstance().getReference("FreelancersWorking");
@@ -583,6 +612,8 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
             polyOptions.addAll(route.get(i).getPoints());
             Polyline polyline = mMap.addPolyline(polyOptions);
             polylines.add(polyline);
+
+            distance = route.get(i).getDistanceValue();
 
             Toast.makeText(getApplicationContext(),"Route "+ (i+1) +": distance - "+ route.get(i).getDistanceValue()+": duration - "+ route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
         }

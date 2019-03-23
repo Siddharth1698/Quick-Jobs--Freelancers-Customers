@@ -36,7 +36,7 @@ public class CustomerChatActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private String currentGroupName,currentDate,currentTime;
     private Toolbar mToolbar;
-
+private  String freelancerFoundId;
     private Button customerStartButton;
     private DatabaseReference userRef,groupNameRef,messageKeyRef;
     @Override
@@ -44,7 +44,10 @@ public class CustomerChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_customer);
         Intent intent = getIntent();
-        String freelancerFoundId = intent.getExtras().getString("freelancerFoundId");
+        if(intent != null){
+            freelancerFoundId  = intent.getExtras().getString("freelancerFoundId");
+        }
+
         customerStartButton = (Button)findViewById(R.id.CustomerStartBtn);
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();

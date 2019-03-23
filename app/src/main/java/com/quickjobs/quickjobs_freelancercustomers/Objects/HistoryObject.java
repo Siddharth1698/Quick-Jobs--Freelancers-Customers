@@ -1,4 +1,4 @@
-package com.quickjobs.quickjobs_freelancercustomers.historyRecyclerView;
+package com.quickjobs.quickjobs_freelancercustomers.Objects;
 
 
 

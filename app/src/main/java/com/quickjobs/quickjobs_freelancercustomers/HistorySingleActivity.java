@@ -131,7 +131,7 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
 
                         if (child.getKey().equals("distance")){
                             distance = child.getValue().toString();
-                            rideDistance.setText(distance.substring(0, Math.min(distance.length(), 5)) + " km");
+                            rideDistance.setText(distance.substring(0, Math.min(distance.length(), 5)) + " m");
 
 
                         }

@@ -1,4 +1,4 @@
-package com.quickjobs.quickjobs_freelancercustomers.historyRecyclerView;
+package com.quickjobs.quickjobs_freelancercustomers.ViewHolders;
 
 import android.content.Intent;
 import android.os.Bundle;
