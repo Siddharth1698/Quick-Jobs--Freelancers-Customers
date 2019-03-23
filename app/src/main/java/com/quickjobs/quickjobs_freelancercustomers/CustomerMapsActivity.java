@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,8 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     private Marker pickupMarker;
     private LinearLayout mFreelancerInfo;
     private ImageView mFreelancerProfileImage;
+
+    private RatingBar mRatingBar;
     private TextView mFreelancerName;
     private EditText jobDesc;
     private String job;
@@ -87,6 +90,8 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         logout = (Button)findViewById(R.id.logoutCustomer);
         request = (Button)findViewById(R.id.request);
         settings = (Button)findViewById(R.id.settings);
+
+        mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         history = (Button)findViewById(R.id.history);
         customerVerifyBtn = (Button)findViewById(R.id.customerVerifyBtn);
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -140,6 +145,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             public void onClick(View view) {
 
                 Intent intent=new Intent(CustomerMapsActivity.this,HistoryActivity.class);
+                intent.putExtra("customerOrDriver", "Customers");
                 startActivity(intent);
                 return;
 
@@ -152,7 +158,6 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
 
                 Intent intent=new Intent(CustomerMapsActivity.this,CustomerChatActivity.class);
-                intent.putExtra("customerOrDriver", "Customers");
                 mFreelancerInfo.setVisibility(View.GONE);
                 startActivity(intent);
                 return;
@@ -424,6 +429,18 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                     if (map.get("profileImageUrl")!=null){
                         Picasso.get().load(map.get("profileImageUrl").toString()).into(mFreelancerProfileImage);
+                    }
+
+                    int ratingSum = 0;
+                    float ratingsTotal = 0;
+                    float ratingsAvg = 0;
+                    for (DataSnapshot child : dataSnapshot.child("rating").getChildren()){
+                        ratingSum = ratingSum + Integer.valueOf(child.getValue().toString());
+                        ratingsTotal++;
+                    }
+                    if(ratingsTotal!= 0){
+                        ratingsAvg = ratingSum/ratingsTotal;
+                        mRatingBar.setRating(ratingsAvg);
                     }
                 }
             }
