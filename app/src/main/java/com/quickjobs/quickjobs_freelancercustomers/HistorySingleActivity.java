@@ -111,6 +111,7 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
                             if(!customerId.equals(currentUserId)){
                                 userDriverOrCustomer = "Freelancers";
                                 getUserInformation("Customers", customerId);
+                                displayCustomerRelatedObjects();
                             }
                         }
                         if (child.getKey().equals("driver")){
