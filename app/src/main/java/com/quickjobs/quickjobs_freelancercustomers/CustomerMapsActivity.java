@@ -117,6 +117,10 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onClick(View view) {
 
+                customerVerifyBtn.setVisibility(View.GONE);
+                startActivity(new Intent(CustomerMapsActivity.this,VerifyActivity.class));
+                finish();
+
             }
         });
         settings.setOnClickListener(new View.OnClickListener() {
