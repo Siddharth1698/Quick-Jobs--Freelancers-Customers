@@ -35,5 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/jobverifiedcash"
         android:layout_margin="20dp"
+        android:id="@+id/jobverifiedgooglepay"
         android:text="Google Pay"/>
 </RelativeLayout>

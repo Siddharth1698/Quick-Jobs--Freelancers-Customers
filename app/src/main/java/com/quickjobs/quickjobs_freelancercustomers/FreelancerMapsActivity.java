@@ -45,6 +45,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -142,6 +143,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                         break;
                     case 2:
                         FirebaseDatabase.getInstance().getReference().child("JobStatus").child(userid).setValue("1");
+                        recordJob();
                         endJob();
                         break;
                 }
@@ -184,6 +186,26 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                 return;
             }
         });
+
+
+    }
+
+    private void recordJob() {
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userId).child("history");
+        DatabaseReference customerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("history");
+        DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference().child("History");
+        String requestId = historyRef.push().getKey();
+        freelancerRef.child(requestId).setValue(true);
+        customerRef.child(requestId).setValue(true);
+
+        HashMap map = new HashMap();
+        map.put("freelancer", userId);
+        map.put("customer", customerId);
+        map.put("rating", 0);
+        historyRef.child(requestId).updateChildren(map);
+
 
 
     }

@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".VerifyActivity"></activity>
+        <activity android:name=".RatingCustomerActivity"></activity>
+        <activity android:name=".VerifyActivity" />
         <activity android:name=".CustomerChatActivity" />
         <activity android:name=".FreelancerChatActivity" />
         <activity android:name=".FreelancerSettingsActivity" />
