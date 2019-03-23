@@ -54,6 +54,7 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,9 +67,9 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
-    private Button logout,request,settings,customerChatBtn,customerVerifyBtn,history;
+    private Button logout, request, settings, customerChatBtn, customerVerifyBtn, history;
     private LatLng pickuplocation;
-    private String customerId = "",requestService;
+    private String customerId = "", requestService;
     private Boolean requestbol = false;
     private Marker pickupMarker;
     private LinearLayout mFreelancerInfo;
@@ -89,23 +90,26 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE).withListener(new MultiplePermissionsListener() {
-            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
-            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+                .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_NETWORK_STATE).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
         }).check();
 
-        mFreelancerInfo = (LinearLayout)findViewById(R.id.freelancerInfo);
+        mFreelancerInfo = (LinearLayout) findViewById(R.id.freelancerInfo);
         mFreelancerProfileImage = (ImageView) findViewById(R.id.freelancerProfileImage);
         mFreelancerName = (TextView) findViewById(R.id.freelancerName);
-        customerChatBtn = (Button)findViewById(R.id.customerChatBtn);
+        customerChatBtn = (Button) findViewById(R.id.customerChatBtn);
 
-        logout = (Button)findViewById(R.id.logoutCustomer);
-        request = (Button)findViewById(R.id.request);
-        settings = (Button)findViewById(R.id.settings);
+        logout = (Button) findViewById(R.id.logoutCustomer);
+        request = (Button) findViewById(R.id.request);
+        settings = (Button) findViewById(R.id.settings);
 
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-        history = (Button)findViewById(R.id.history);
-        customerVerifyBtn = (Button)findViewById(R.id.customerVerifyBtn);
+        history = (Button) findViewById(R.id.history);
+        customerVerifyBtn = (Button) findViewById(R.id.customerVerifyBtn);
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
@@ -125,7 +129,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             public void onClick(View view) {
 
 
-                 postJob();
+                postJob();
 
 
             }
@@ -138,7 +142,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                 customerVerifyBtn.setVisibility(View.GONE);
                 FirebaseDatabase.getInstance().getReference().child("JobStatus").child(freelancerFoundId).setValue("0");
                 FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRideId").removeValue();
-                startActivity(new Intent(CustomerMapsActivity.this,VerifyActivity.class));
+                startActivity(new Intent(CustomerMapsActivity.this, VerifyActivity.class));
                 finish();
 
             }
@@ -147,7 +151,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(CustomerMapsActivity.this,CustomerSettingsActivity.class);
+                Intent intent = new Intent(CustomerMapsActivity.this, CustomerSettingsActivity.class);
                 startActivity(intent);
                 return;
             }
@@ -157,7 +161,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             @Override
             public void onClick(View view) {
 
-                Intent intent=new Intent(CustomerMapsActivity.this,HistoryActivity.class);
+                Intent intent = new Intent(CustomerMapsActivity.this, HistoryActivity.class);
                 intent.putExtra("customerOrDriver", "Customers");
                 startActivity(intent);
                 return;
@@ -170,9 +174,8 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             public void onClick(View view) {
 
 
-                Intent intent=new Intent(CustomerMapsActivity.this,CustomerChatActivity.class);
-                intent.putExtra("freelancerFoundId",freelancerFoundId);
-
+                Intent intent = new Intent(CustomerMapsActivity.this, CustomerChatActivity.class);
+                intent.putExtra("freelancerFoundId", freelancerFoundId);
                 mFreelancerInfo.setVisibility(View.GONE);
                 startActivity(intent);
                 return;
@@ -180,9 +183,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         });
 
 
-
     }
-
 
 
     private void postJob() {
@@ -200,29 +201,28 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        jobDesc = (EditText)alertLayout.findViewById(R.id.job_desc);
+                        jobDesc = (EditText) alertLayout.findViewById(R.id.job_desc);
                         job = jobDesc.getText().toString();
                         FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userid).child("CustomerRequestDescs").setValue(job);
 
-                        if (requestbol){
+                        if (requestbol) {
 
-                                    endJob();
+                            endJob();
 
 
-                        }else {
+                        } else {
 
                             requestbol = true;
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userid).child("location");
 
                             GeoFire geoFire = new GeoFire(ref);
-                            geoFire.setLocation(userid,new GeoLocation(mLastLocation.getLatitude(),mLastLocation.getLongitude()));
+                            geoFire.setLocation(userid, new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
 
-                            pickuplocation = new LatLng(mLastLocation.getLatitude(),mLastLocation.getLongitude());
+                            pickuplocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                             pickupMarker = mMap.addMarker(new MarkerOptions().position(pickuplocation).title("I AM HERE"));
 
                             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
 
                             FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").setValue(job);
@@ -232,7 +232,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                                    if (dataSnapshot.exists()){
+                                    if (dataSnapshot.exists()) {
                                         customerChatBtn.setVisibility(View.VISIBLE);
                                     }
 
@@ -241,14 +241,14 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                                 @Override
                                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.exists()){
+                                    if (dataSnapshot.exists()) {
                                         customerChatBtn.setVisibility(View.VISIBLE);
                                     }
                                 }
 
                                 @Override
                                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()){
+                                    if (dataSnapshot.exists()) {
                                         customerChatBtn.setVisibility(View.GONE);
                                     }
                                 }
@@ -270,7 +270,6 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
 
-
                                 }
 
                                 @Override
@@ -282,7 +281,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                                 public void onChildRemoved(DataSnapshot dataSnapshot) {
                                     mFreelancerInfo.setVisibility(View.GONE);
                                     request.setText("Get Things Done");
-                                    Toast.makeText(getApplicationContext(),"Freelancer cancelled your request...",Toast.LENGTH_SHORT);
+                                    Toast.makeText(getApplicationContext(), "Freelancer cancelled your request...", Toast.LENGTH_SHORT);
 
                                 }
 
@@ -300,10 +299,10 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                             FirebaseDatabase.getInstance().getReference().child("JobStatus").addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.exists()){
-                                        if (dataSnapshot.getValue().toString().equals("1")){
+                                    if (dataSnapshot.exists()) {
+                                        if (dataSnapshot.getValue().toString().equals("1")) {
                                             customerVerifyBtn.setVisibility(View.VISIBLE);
-                                        }else {
+                                        } else {
                                             if (dataSnapshot.exists()) {
                                                 customerVerifyBtn.setVisibility(View.GONE);
                                             }
@@ -315,10 +314,10 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                                 @Override
                                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.exists()){
-                                        if (dataSnapshot.getValue().toString().equals("1")){
+                                    if (dataSnapshot.exists()) {
+                                        if (dataSnapshot.getValue().toString().equals("1")) {
                                             customerVerifyBtn.setVisibility(View.VISIBLE);
-                                        }else {
+                                        } else {
                                             customerVerifyBtn.setVisibility(View.GONE);
                                         }
 
@@ -342,10 +341,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                             });
 
 
-
                         }
-
-
 
 
                         dialog.cancel();
@@ -376,13 +372,13 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
         GeoFire geoFire = new GeoFire(freelancerLocation);
 
-        geoQuery = geoFire.queryAtLocation(new GeoLocation(pickuplocation.latitude,pickuplocation.longitude),radius);
+        geoQuery = geoFire.queryAtLocation(new GeoLocation(pickuplocation.latitude, pickuplocation.longitude), radius);
         geoQuery.removeAllListeners();
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
-                if (!freelancerFound && requestbol){
+                if (!freelancerFound && requestbol) {
                     freelancerFound = true;
                     freelancerFoundId = key;
 
@@ -390,7 +386,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                     String customerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                     HashMap map = new HashMap();
-                    map.put("CustomerRideId",customerId);
+                    map.put("CustomerRideId", customerId);
                     freelancerRef.updateChildren(map);
 
                     getFreelancerLocation();
@@ -415,7 +411,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
             @Override
             public void onGeoQueryReady() {
-                if (!freelancerFound){
+                if (!freelancerFound) {
                     radius++;
                     getClosestFreelancer();
                 }
@@ -431,30 +427,30 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
     private void getFreelancerInfo() {
         mFreelancerInfo.setVisibility(View.VISIBLE);
-        DatabaseReference mCustomerDatabase =  FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId);
+        DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId);
         mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
-                    Map<String,Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    if (map.get("name")!=null){
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
+                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
+                    if (map.get("name") != null) {
 
                         mFreelancerName.setText(map.get("name").toString());
                     }
 
-                    if (map.get("profileImageUrl")!=null){
+                    if (map.get("profileImageUrl") != null) {
                         Picasso.get().load(map.get("profileImageUrl").toString()).into(mFreelancerProfileImage);
                     }
 
                     int ratingSum = 0;
                     float ratingsTotal = 0;
                     float ratingsAvg = 0;
-                    for (DataSnapshot child : dataSnapshot.child("rating").getChildren()){
+                    for (DataSnapshot child : dataSnapshot.child("rating").getChildren()) {
                         ratingSum = ratingSum + Integer.valueOf(child.getValue().toString());
                         ratingsTotal++;
                     }
-                    if(ratingsTotal!= 0){
-                        ratingsAvg = ratingSum/ratingsTotal;
+                    if (ratingsTotal != 0) {
+                        ratingsAvg = ratingSum / ratingsTotal;
                         mRatingBar.setRating(ratingsAvg);
                     }
                 }
@@ -477,38 +473,38 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         freelancerLocationRefListner = freelancerLocationRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() && requestbol){
-                List<Object> map = (List<Object>) dataSnapshot.getValue();
-                double locationLat = 0;
-                double locationLng = 0;
-                request.setText("Freelancer Found");
-                if (map.get(0) != null){
-                    locationLat = Double.parseDouble(map.get(0).toString());
-                    locationLng = Double.parseDouble(map.get(1).toString());
+                if (dataSnapshot.exists() && requestbol) {
+                    List<Object> map = (List<Object>) dataSnapshot.getValue();
+                    double locationLat = 0;
+                    double locationLng = 0;
+                    request.setText("Freelancer Found");
+                    if (map.get(0) != null) {
+                        locationLat = Double.parseDouble(map.get(0).toString());
+                        locationLng = Double.parseDouble(map.get(1).toString());
+                    }
+                    LatLng freelancerLatLng = new LatLng(locationLat, locationLng);
+
+                    if (freelancerMarker != null) {
+                        freelancerMarker.remove();
+                    }
+                    Location loc1 = new Location("");
+                    loc1.setLatitude(pickuplocation.latitude);
+                    loc1.setLongitude(pickuplocation.longitude);
+
+                    Location loc2 = new Location("");
+                    loc2.setLatitude(freelancerLatLng.latitude);
+                    loc2.setLongitude(freelancerLatLng.longitude);
+
+                    float distance = loc1.distanceTo(loc2);
+
+                    if (distance < 100) {
+                        request.setText("freelancer is Here");
+                    } else {
+                        request.setText("freelancer Found: " + String.valueOf(distance));
+                    }
+                    freelancerMarker = mMap.addMarker(new MarkerOptions().position(freelancerLatLng).title("Your freelancer"));
+
                 }
-                LatLng freelancerLatLng = new LatLng(locationLat,locationLng);
-
-                if (freelancerMarker != null){
-                    freelancerMarker.remove();
-                }
-                Location loc1 = new Location("");
-                loc1.setLatitude(pickuplocation.latitude);
-                loc1.setLongitude(pickuplocation.longitude);
-
-                Location loc2 = new Location("");
-                loc2.setLatitude(freelancerLatLng.latitude);
-                loc2.setLongitude(freelancerLatLng.longitude);
-
-                float distance = loc1.distanceTo(loc2);
-
-                if (distance<100){
-                    request.setText("freelancer is Here");
-                }else{
-                    request.setText("freelancer Found: " + String.valueOf(distance));
-                }
-                freelancerMarker = mMap.addMarker(new MarkerOptions().position(freelancerLatLng).title("Your freelancer"));
-
-            }
 
             }
 
@@ -518,8 +514,9 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             }
         });
     }
+
     private DatabaseReference freelancerhasEndedRef;
-    private  ValueEventListener freelancerhasEndedRefListner;
+    private ValueEventListener freelancerhasEndedRefListner;
 
     private void gethasEndedJob() {
 
@@ -545,44 +542,39 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         });
     }
 
-        private void endJob() {
+    private void endJob() {
 
-            requestbol = false;
-            freelancerLocationRef.removeEventListener(freelancerLocationRefListner);
-            geoQuery.removeAllListeners();
-            freelancerhasEndedRef.removeEventListener(freelancerhasEndedRefListner);
+        requestbol = false;
+        freelancerLocationRef.removeEventListener(freelancerLocationRefListner);
+        geoQuery.removeAllListeners();
+        freelancerhasEndedRef.removeEventListener(freelancerhasEndedRefListner);
 
-            if (freelancerFoundId != null){
-                DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRequest");
-                freelancerRef.setValue(true);
-                freelancerFoundId = null;
-
-            }
-
-            freelancerFound = false;
-            radius = 1;
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("location");
-            FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").removeValue();
-
-            GeoFire geoFire = new GeoFire(ref);
-            geoFire.removeLocation(userId);
-
-            if (pickupMarker != null){
-                pickupMarker.remove();
-            }
-            request.setText("Get Things Done");
-
-
-            mFreelancerInfo.setVisibility(View.GONE);
-            mFreelancerName.setText("");
+        if (freelancerFoundId != null) {
+            DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRequest");
+            freelancerRef.setValue(true);
+            freelancerFoundId = null;
 
         }
 
+        freelancerFound = false;
+        radius = 1;
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("location");
+        FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").removeValue();
+
+        GeoFire geoFire = new GeoFire(ref);
+        geoFire.removeLocation(userId);
+
+        if (pickupMarker != null) {
+            pickupMarker.remove();
+        }
+        request.setText("Get Things Done");
 
 
+        mFreelancerInfo.setVisibility(View.GONE);
+        mFreelancerName.setText("");
 
-
+    }
 
 
     @Override
@@ -608,7 +600,6 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
         mGoogleApiClient.connect();
     }
-
 
 
     @SuppressLint("RestrictedApi")
@@ -641,9 +632,12 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     public void onLocationChanged(Location location) {
 
         mLastLocation = location;
-        LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+
+//        if(!getFreelancesAroundStarted)
+//            getFreelancesAround();
 
 
     }
@@ -652,6 +646,66 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     protected void onStop() {
         super.onStop();
     }
-
-
 }
+
+
+
+//    boolean getFreelancesAroundStarted = false;
+//        List<Marker> markers = new ArrayList<Marker>();
+//    private void getFreelancesAround(){
+//        getFreelancesAroundStarted = true;
+//        DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference().child("FreelancersAvailable");
+//
+//        GeoFire geoFire = new GeoFire(driverLocation);
+//        GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(mLastLocation.getLongitude(), mLastLocation.getLatitude()), 15000);
+//
+//        geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
+//            @Override
+//            public void onKeyEntered(String key, GeoLocation location) {
+//
+//                for(Marker markerIt : markers){
+//                    if(markerIt.getTag().equals(key))
+//                        return;
+//                }
+//
+//                LatLng freelancerLocation = new LatLng(location.latitude, location.longitude);
+//
+//                Marker mFreelancerMarker = mMap.addMarker(new MarkerOptions().position(freelancerLocation).title(key));
+//                mFreelancerMarker.setTag(key);
+//
+//                markers.add(mFreelancerMarker);
+//
+//
+//            }
+//
+//            @Override
+//            public void onKeyExited(String key) {
+//                for(Marker markerIt : markers){
+//                    if(markerIt.getTag().equals(key)){
+//                        markerIt.remove();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onKeyMoved(String key, GeoLocation location) {
+//                for(Marker markerIt : markers){
+//                    if(markerIt.getTag().equals(key)){
+//                        markerIt.setPosition(new LatLng(location.latitude, location.longitude));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onGeoQueryReady() {
+//            }
+//
+//            @Override
+//            public void onGeoQueryError(DatabaseError error) {
+//
+//            }
+//        });
+//    }
+//}
+//
+//
