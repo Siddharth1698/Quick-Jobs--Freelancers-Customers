@@ -59,7 +59,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
-    private Button logout,request,settings,customerChatBtn,customerVerifyBtn;
+    private Button logout,request,settings,customerChatBtn,customerVerifyBtn,history;
     private LatLng pickuplocation;
     private String customerId = "",requestService;
     private Boolean requestbol = false;
@@ -87,6 +87,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         logout = (Button)findViewById(R.id.logoutCustomer);
         request = (Button)findViewById(R.id.request);
         settings = (Button)findViewById(R.id.settings);
+        history = (Button)findViewById(R.id.history);
         customerVerifyBtn = (Button)findViewById(R.id.customerVerifyBtn);
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
@@ -130,6 +131,17 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                 Intent intent=new Intent(CustomerMapsActivity.this,CustomerSettingsActivity.class);
                 startActivity(intent);
                 return;
+            }
+        });
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(CustomerMapsActivity.this,HistoryActivity.class);
+                startActivity(intent);
+                return;
+
             }
         });
 
