@@ -26,6 +26,7 @@
 
     <Button
         android:id="@+id/customer"
+        android:text="@string/gethelp"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
@@ -35,7 +36,6 @@
         android:layout_marginBottom="200dp"
         android:background="@drawable/roundbox"
         android:fontFamily="@font/slabo_13px"
-        android:text="@string/gethelp"
         android:textColor="@color/colorPrimary"
         android:textSize="18sp"
         android:textStyle="bold" />

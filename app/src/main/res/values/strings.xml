@@ -4,4 +4,8 @@
     <string name="gethelp">GET HELP</string>
     <string name="work">WORK</string>
     <string name="qjslogo">Quick Jobs Logo</string>
+    <string name="enteremail">Enter your email </string>
+    <string name="enterpass">Enter your password</string>
+    <string name="loginbutton">LOGIN</string>
+    <string name="registerbutton">REGISTER</string>
 </resources>
