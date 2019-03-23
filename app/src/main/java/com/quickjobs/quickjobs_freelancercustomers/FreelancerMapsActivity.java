@@ -63,9 +63,10 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     private ImageView mCustomerProfileImage;
     private TextView mCustomerName,mCustomerPhone,mCustomerAddress;
     private List<Polyline> polylines;
-    private Button freelancerStartBtn,freelancerDeclineBtn,fchat;
+    private Button mJobStatus,freelancerDeclineBtn,fchat;
     private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
     private String customerId = "";
+    private int status = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         mapFragment.getMapAsync(this);
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         startstopbtns = (LinearLayout)findViewById(R.id.startstopbtns);
-        freelancerStartBtn =(Button)findViewById(R.id.fsb) ;
+        mJobStatus =(Button)findViewById(R.id.fsb) ;
         freelancerDeclineBtn = (Button)findViewById(R.id.fdb) ;
         fchat = (Button)findViewById(R.id.fchat);
 
@@ -126,10 +127,22 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
 
 
-        freelancerStartBtn.setOnClickListener(new View.OnClickListener() {
+        mJobStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCustomerInfo.setVisibility(View.GONE);
+                freelancerDeclineBtn.setVisibility(View.GONE);
+
+                switch (status){
+                    case 1:
+                        status = 2;
+                        freelancerDeclineBtn.setVisibility(View.GONE);
+                        mJobStatus.setText("Job Finished");
+                        break;
+                    case 2:
+                        endJob();
+                        break;
+                }
 
             }
         });
@@ -173,7 +186,48 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
     }
 
-    public void declineJob() {
+    private void endJob() {
+
+            mJobStatus.setText("Start");
+            startstopbtns.setVisibility(View.GONE);
+        FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).removeValue();
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userId).child("CustomerRequest");
+            freelancerRef.setValue(true);
+
+
+
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(customerId).child("location");
+        FirebaseDatabase.getInstance().getReference("CustomerRequests").child(customerId).child("CustomerRequestDescs").removeValue();
+
+        GeoFire geoFire = new GeoFire(ref);
+        geoFire.removeLocation(customerId);
+        customerId = "";
+
+        if (pickUpMarker != null){
+            pickUpMarker.remove();
+        }
+
+
+        erasePolyLines();
+        customerId = "";
+
+        if (pickUpMarker!=null){
+            pickUpMarker.remove();
+        }
+
+        if (assignedCustomerPickUpLocationRefListner != null){
+            assignedCustomerPickUpLocationRef.removeEventListener(assignedCustomerPickUpLocationRefListner);
+        }
+        mCustomerInfo.setVisibility(View.GONE);
+        mCustomerName.setText("");
+        mCustomerPhone.setText("");
+
+    }
+
+
+        public void declineJob() {
         erasePolyLines();
         customerId = "";
         if (pickUpMarker!=null){
@@ -190,26 +244,18 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     private void getAssignedCustomer() {
 
         String freelancerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        final DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerId).child("CustomerRideId");
+        DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerId).child("CustomerRideId");
         assignedCustomerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 if (dataSnapshot.exists()){
+                    status = 1;
                     customerId = dataSnapshot.getValue().toString();
                     getAssignedCustomerPickUpLocation();
                     getAssignedCustomerInfo();
                 }else {
-                   erasePolyLines();
-                    customerId = "";
-
-                    if (pickUpMarker!=null){
-                        pickUpMarker.remove();
-                    }
-
-                    if (assignedCustomerPickUpLocationRefListner != null){
-                        assignedCustomerRef.removeEventListener(assignedCustomerPickUpLocationRefListner);
-                    }
+                   endJob();
 
                 }
 

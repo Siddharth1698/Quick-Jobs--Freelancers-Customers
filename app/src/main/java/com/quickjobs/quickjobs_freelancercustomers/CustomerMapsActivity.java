@@ -162,32 +162,8 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                         FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userid).child("CustomerRequestDescs").setValue(job);
 
                         if (requestbol){
-                            requestbol = false;
-                            freelancerLocationRef.removeEventListener(freelancerLocationRefListner);
-                            geoQuery.removeAllListeners();
 
-                            if (freelancerFoundId != null){
-                                DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRequest");
-                                freelancerRef.setValue(true);
-                                freelancerFoundId = null;
-
-                            }
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userid).child("location");
-                            FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userid).child("CustomerRequestDescs").removeValue();
-
-                            GeoFire geoFire = new GeoFire(ref);
-                            geoFire.removeLocation(userid);
-
-                            if (pickupMarker != null){
-                                pickupMarker.remove();
-                            }
-                            request.setText("Get Things Done");
-
-
-                            mFreelancerInfo.setVisibility(View.GONE);
-                            mFreelancerName.setText("");
-
-
+                                    endJob();
 
 
                         }else {
@@ -229,9 +205,9 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                                     @Override
                                     public void onChildRemoved(DataSnapshot dataSnapshot) {
-                                        if (dataSnapshot.exists()){
+
                                             customerChatBtn.setVisibility(View.GONE);
-                                        }
+
                                     }
 
                                     @Override
@@ -342,6 +318,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                     getFreelancerLocation();
                     getFreelancerInfo();
+                    gethasEndedJob();
                     request.setText("Looking for Freelancer Location");
 
                 }
@@ -452,6 +429,71 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             }
         });
     }
+    private DatabaseReference freelancerhasEndedRef;
+    private  ValueEventListener freelancerhasEndedRefListner;
+
+    private void gethasEndedJob() {
+
+
+        freelancerhasEndedRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRideId");
+        freelancerhasEndedRefListner = freelancerhasEndedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+
+                } else {
+
+                    endJob();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+        private void endJob() {
+
+            requestbol = false;
+            freelancerLocationRef.removeEventListener(freelancerLocationRefListner);
+            geoQuery.removeAllListeners();
+            freelancerhasEndedRef.removeEventListener(freelancerhasEndedRefListner);
+
+            if (freelancerFoundId != null){
+                DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRequest");
+                freelancerRef.setValue(true);
+                freelancerFoundId = null;
+
+            }
+
+            freelancerFound = false;
+            radius = 1;
+            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("location");
+            FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").removeValue();
+
+            GeoFire geoFire = new GeoFire(ref);
+            geoFire.removeLocation(userId);
+
+            if (pickupMarker != null){
+                pickupMarker.remove();
+            }
+            request.setText("Get Things Done");
+
+
+            mFreelancerInfo.setVisibility(View.GONE);
+            mFreelancerName.setText("");
+
+        }
+
+
+
+
+
 
 
     @Override
