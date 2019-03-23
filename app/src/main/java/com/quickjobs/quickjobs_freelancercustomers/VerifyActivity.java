@@ -19,7 +19,7 @@ public class VerifyActivity extends AppCompatActivity {
         jobverifiedcash.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(VerifyActivity.this,RatingCustomerActivity.class));
+                startActivity(new Intent(VerifyActivity.this,CustomerMapsActivity.class));
                 finish();
             }
         });

@@ -125,6 +125,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
                 customerVerifyBtn.setVisibility(View.GONE);
                 FirebaseDatabase.getInstance().getReference().child("JobStatus").child(freelancerFoundId).setValue("0");
+                FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(freelancerFoundId).child("CustomerRideId").removeValue();
                 startActivity(new Intent(CustomerMapsActivity.this,VerifyActivity.class));
                 finish();
 
