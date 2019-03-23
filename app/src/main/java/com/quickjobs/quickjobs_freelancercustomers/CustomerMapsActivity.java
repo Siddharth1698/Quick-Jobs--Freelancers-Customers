@@ -59,12 +59,11 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
-    private Button logout,request,settings,customerChatBtn;
+    private Button logout,request,settings,customerChatBtn,customerVerifyBtn;
     private LatLng pickuplocation;
     private String customerId = "",requestService;
     private Boolean requestbol = false;
     private Marker pickupMarker;
-    private String destination;
     private LinearLayout mFreelancerInfo;
     private ImageView mFreelancerProfileImage;
     private TextView mFreelancerName;
@@ -88,6 +87,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
         logout = (Button)findViewById(R.id.logoutCustomer);
         request = (Button)findViewById(R.id.request);
         settings = (Button)findViewById(R.id.settings);
+        customerVerifyBtn = (Button)findViewById(R.id.customerVerifyBtn);
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
@@ -113,6 +113,12 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             }
         });
 
+        customerVerifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,45 +192,40 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                             request.setText("Getting your freelancer...");
                             getClosestFreelancer();
                             FirebaseDatabase.getInstance().getReference().child("Chats").addChildEventListener(new ChildEventListener() {
-                                    @Override
-                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                                        if (dataSnapshot.exists()){
-                                            customerChatBtn.setVisibility(View.VISIBLE);
-                                        }
-
-
+                                    if (dataSnapshot.exists()){
+                                        customerChatBtn.setVisibility(View.VISIBLE);
                                     }
 
-                                    @Override
-                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                                        if (dataSnapshot.exists()){
-                                            customerChatBtn.setVisibility(View.VISIBLE);
-                                        }
+
+                                }
+
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                    if (dataSnapshot.exists()){
+                                        customerChatBtn.setVisibility(View.VISIBLE);
                                     }
+                                }
 
-                                    @Override
-                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                            customerChatBtn.setVisibility(View.GONE);
-
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()){
+                                        customerChatBtn.setVisibility(View.GONE);
                                     }
+                                }
 
-                                    @Override
-                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                                    }
+                                }
 
-                                    @Override
-                                    public void onCancelled(DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
 
-                                    }
-                                });
-
-
-
-
-
+                                }
+                            });
 
 
                             FirebaseDatabase.getInstance().getReference().child("CustomerRequests").child(customerId).addChildEventListener(new ChildEventListener() {
@@ -259,10 +260,46 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                                 }
                             });
 
+                            FirebaseDatabase.getInstance().getReference().child("JobStatus").addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                    if (dataSnapshot.exists()){
+                                        if (dataSnapshot.getValue().toString().equals("1")){
+                                            customerVerifyBtn.setVisibility(View.VISIBLE);
+                                        }else {
+                                            customerVerifyBtn.setVisibility(View.GONE);
+                                        }
 
+                                    }
+                                }
 
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                    if (dataSnapshot.exists()){
+                                        if (dataSnapshot.getValue().toString().equals("1")){
+                                            customerVerifyBtn.setVisibility(View.VISIBLE);
+                                        }else {
+                                            customerVerifyBtn.setVisibility(View.GONE);
+                                        }
 
+                                    }
+                                }
 
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                }
+
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
 
 
 

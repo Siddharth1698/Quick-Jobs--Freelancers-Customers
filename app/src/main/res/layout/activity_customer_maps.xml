@@ -92,6 +92,12 @@
                 android:text="Chat"
                 android:id="@+id/customerChatBtn"
                 android:visibility="gone"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Verify"
+                android:id="@+id/customerVerifyBtn"
+                android:visibility="gone"/>
 
 
             <Button

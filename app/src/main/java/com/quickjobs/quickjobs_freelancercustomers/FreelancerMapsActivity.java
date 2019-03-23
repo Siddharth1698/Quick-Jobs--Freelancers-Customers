@@ -137,9 +137,11 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                     case 1:
                         status = 2;
                         freelancerDeclineBtn.setVisibility(View.GONE);
+                        FirebaseDatabase.getInstance().getReference().child("JobStatus").child(userid).setValue("0");
                         mJobStatus.setText("Job Finished");
                         break;
                     case 2:
+                        FirebaseDatabase.getInstance().getReference().child("JobStatus").child(userid).setValue("1");
                         endJob();
                         break;
                 }
