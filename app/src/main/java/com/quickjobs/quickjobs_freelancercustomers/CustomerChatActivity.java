@@ -44,9 +44,8 @@ private  String freelancerFoundId;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_customer);
         Intent intent = getIntent();
-        if(intent != null){
-            freelancerFoundId  = intent.getExtras().getString("freelancerFoundId");
-        }
+        freelancerFoundId  = intent.getExtras().getString("freelancerFoundId");
+
 
         customerStartButton = (Button)findViewById(R.id.CustomerStartBtn);
         mAuth = FirebaseAuth.getInstance();

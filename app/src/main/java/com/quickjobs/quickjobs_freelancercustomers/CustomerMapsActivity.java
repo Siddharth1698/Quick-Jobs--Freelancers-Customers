@@ -171,6 +171,8 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
 
 
                 Intent intent=new Intent(CustomerMapsActivity.this,CustomerChatActivity.class);
+                intent.putExtra("freelancerFoundId",freelancerFoundId);
+
                 mFreelancerInfo.setVisibility(View.GONE);
                 startActivity(intent);
                 return;
