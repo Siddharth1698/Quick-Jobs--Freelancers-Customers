@@ -119,6 +119,7 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
             public void onClick(View view) {
 
                 customerVerifyBtn.setVisibility(View.GONE);
+                FirebaseDatabase.getInstance().getReference().child("JobStatus").child(freelancerFoundId).setValue("0");
                 startActivity(new Intent(CustomerMapsActivity.this,VerifyActivity.class));
                 finish();
 
@@ -283,7 +284,10 @@ public class CustomerMapsActivity extends FragmentActivity implements OnMapReady
                                         if (dataSnapshot.getValue().toString().equals("1")){
                                             customerVerifyBtn.setVisibility(View.VISIBLE);
                                         }else {
-                                            customerVerifyBtn.setVisibility(View.GONE);
+                                            if (dataSnapshot.exists()) {
+                                                customerVerifyBtn.setVisibility(View.GONE);
+                                            }
+
                                         }
 
                                     }
