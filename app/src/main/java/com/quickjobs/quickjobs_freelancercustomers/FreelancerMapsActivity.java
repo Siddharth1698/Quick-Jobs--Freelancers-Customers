@@ -64,7 +64,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     private ImageView mCustomerProfileImage;
     private TextView mCustomerName,mCustomerPhone,mCustomerAddress;
     private List<Polyline> polylines;
-    private Button mJobStatus,freelancerDeclineBtn,fchat;
+    private Button mJobStatus,freelancerDeclineBtn,fchat,freelancerhistorybtn;
     private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
     private String customerId = "";
     private int status = 0;
@@ -93,6 +93,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         logoutfreelancer = (Button)findViewById(R.id.logoutFreelancer);
         AcceptJobBtn = (Button)findViewById(R.id.AcceptJobBtn);
         DeclineJobBtn = (Button)findViewById(R.id.DeclineJobBtn);
+        freelancerhistorybtn = (Button)findViewById(R.id.freelancerhistorybtn);
 
 
         AcceptJobBtn.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +125,18 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
 
                 declineJob();
                }
+        });
+
+        freelancerhistorybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent=new Intent(FreelancerMapsActivity.this,HistoryActivity.class);
+                intent.putExtra("customerOrDriver", "Freelancers");
+                startActivity(intent);
+                return;
+
+            }
         });
 
 
@@ -200,15 +213,26 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
         freelancerRef.child(requestId).setValue(true);
         customerRef.child(requestId).setValue(true);
 
+
         HashMap map = new HashMap();
-        map.put("freelancer", userId);
+        map.put("driver", userId);
         map.put("customer", customerId);
         map.put("rating", 0);
+        map.put("timestamp", getCurrentTimestamp());
+        map.put("destination", "jobdesctobeupdatedhere");
+        map.put("location/from/lat", pickupLatLng.latitude);
+        map.put("location/from/lng", pickupLatLng.longitude);
+        map.put("location/to/lat", lastLatLng.latitude);
+        map.put("location/to/lng", lastLatLng.longitude);
+        map.put("distance", "5km");
         historyRef.child(requestId).updateChildren(map);
-
-
-
     }
+
+    private Long getCurrentTimestamp() {
+        Long timestamp = System.currentTimeMillis()/1000;
+        return timestamp;
+    }
+
 
     private void endJob() {
 
@@ -333,6 +357,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     Marker pickUpMarker;
     DatabaseReference assignedCustomerPickUpLocationRef;
     private ValueEventListener assignedCustomerPickUpLocationRefListner;
+    LatLng pickupLatLng,lastLatLng;
     private void getAssignedCustomerPickUpLocation() {
 
         assignedCustomerPickUpLocationRef = FirebaseDatabase.getInstance().getReference().child("CustomerRequests").child(customerId).child("location").child(customerId).child("l");
@@ -356,7 +381,7 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
                     }
 
 
-                    LatLng pickupLatLng = new LatLng(locationLat,locationLng);
+                    pickupLatLng = new LatLng(locationLat,locationLng);
 
                     pickUpMarker = mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("Pickup Location"));
 
@@ -380,6 +405,8 @@ public class FreelancerMapsActivity extends FragmentActivity implements OnMapRea
     private void getRouteToMarkder(LatLng pickupLatLng) {
 
         if( pickupLatLng!= null) {
+
+            lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
 
             Routing routing = new Routing.Builder()
                     .key("AIzaSyAUHvnkNCxNZgu4FiCTPV4AxZRzyZltPYU")

@@ -10,7 +10,7 @@ import com.quickjobs.quickjobs_freelancercustomers.R;
 
 import java.util.List;
 
-public class HistoryAdapter extends RecyclerView.Adapter<HistoryViewHolders> {
+public class HistoryAdapter  extends RecyclerView.Adapter<HistoryViewHolders> {
 
     private List<HistoryObject> itemList;
     private Context context;
