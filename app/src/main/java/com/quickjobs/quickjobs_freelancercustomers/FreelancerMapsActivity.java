@@ -73,7 +73,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     Location mLastLocation;
     LocationRequest mLocationRequest;
     private Button logoutfreelancer,mSettings,AcceptJobBtn,DeclineJobBtn;
-    private String userid;
+    private String userid,uid;
     private Boolean isLoggingOut = false;
     public LinearLayout mCustomerInfo,startstopbtns;
     private ImageView mCustomerProfileImage;
@@ -85,6 +85,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     private static final int[] COLORS = new int[]{R.color.primary_dark_material_light};
     private String customerId = "", desc = "";
     private int status = 0;
+    private TextView userNameNav,userPhoneNav;
+    private ImageView userImageNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +103,10 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        userNameNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navName);
+        userImageNav = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.navImage);
+        userPhoneNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navPhone);
+        updateFreelancerNavHeader();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         polylines = new ArrayList<>();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -240,6 +246,33 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         });
 
 
+    }
+
+    private void updateFreelancerNavHeader() {
+
+        uid = userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                       if (dataSnapshot.exists()){
+                           String name = dataSnapshot.child("name").getValue().toString();
+                           String phone = dataSnapshot.child("phone").getValue().toString();
+                           String image = dataSnapshot.child("profileImageUrl").getValue().toString();
+
+                           userNameNav.setText(name);
+                           userPhoneNav.setText(phone);
+                           Picasso.get().load(image).into(userImageNav);
+
+
+                       }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
