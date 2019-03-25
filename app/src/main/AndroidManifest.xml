@@ -19,6 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".FreelancerProfileRegisterActivity"></activity>
+        <activity android:name=".CustomerProfileRegistrationActivity" />
+        <activity android:name=".WelcomeActivity"/>
         <activity android:name=".HistorySingleActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".RatingCustomerActivity" />
@@ -51,12 +54,16 @@
         <activity android:name=".CustomerLoginActivity" />
         <activity android:name=".FreelancerLoginActivity" />
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+       <activity android:name=".SplashScreenActivity">
+           <intent-filter>
+               <action android:name="android.intent.action.MAIN" />
+
+               <category android:name="android.intent.category.LAUNCHER" />
+           </intent-filter>
+
+
+       </activity>
     </application>
 
 </manifest>
