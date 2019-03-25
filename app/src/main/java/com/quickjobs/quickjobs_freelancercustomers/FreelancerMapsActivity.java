@@ -250,7 +250,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
     private void updateFreelancerNavHeader() {
 
-        uid = userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(uid).addValueEventListener(new ValueEventListener() {
             @Override

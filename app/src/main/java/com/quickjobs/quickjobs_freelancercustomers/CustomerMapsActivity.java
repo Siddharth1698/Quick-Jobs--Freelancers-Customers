@@ -80,12 +80,15 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
     private Boolean requestbol = false;
     private Marker pickupMarker;
     private LinearLayout mFreelancerInfo;
+    String uid;
     private ImageView mFreelancerProfileImage;
 
     private RatingBar mRatingBar;
     private TextView mFreelancerName;
     private EditText jobDesc;
     private String job;
+    private TextView userNameNav,userPhoneNav;
+    private ImageView userImageNav;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +109,10 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        userNameNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navName);
+        userImageNav = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.navImage);
+        userPhoneNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navPhone);
+        updateCustomerNavHeader();
 
         mapFragment.getMapAsync(this);
 
@@ -203,6 +210,33 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         });
 
 
+    }
+
+    private void updateCustomerNavHeader() {
+
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    String name = dataSnapshot.child("name").getValue().toString();
+                    String phone = dataSnapshot.child("phone").getValue().toString();
+                    String image = dataSnapshot.child("profileImageUrl").getValue().toString();
+
+                    userNameNav.setText(name);
+                    userPhoneNav.setText(phone);
+                    Picasso.get().load(image).into(userImageNav);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
