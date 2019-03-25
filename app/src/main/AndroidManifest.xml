@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HistorySingleActivity"></activity>
+        <activity android:name=".HistorySingleActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".RatingCustomerActivity" />
         <activity android:name=".VerifyActivity" />
