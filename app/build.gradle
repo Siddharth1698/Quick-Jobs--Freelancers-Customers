@@ -27,11 +27,16 @@ dependencies {
     //noinspection GradleCompatible
 
     implementation 'com.google.firebase:firebase-auth:11.0.2'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
     implementation 'com.google.firebase:firebase-storage:11.0.2'
     implementation 'com.google.firebase:firebase-database:11.0.2'
     implementation 'com.google.android.gms:play-services-maps:11.0.2'
     implementation 'com.google.android.gms:play-services-location:11.0.2'
     implementation 'com.firebase:geofire-android:2.1.1'
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'com.google.firebase:firebase-core:11.0.2'
+
     implementation 'com.github.jd-alexander:library:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.karumi:dexter:5.0.0'
