@@ -33,9 +33,6 @@ public class FreelancerLoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_freelancer_login);
         auth = FirebaseAuth.getInstance();
 
-
-
-
         firebaseAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

@@ -24,7 +24,7 @@
         <activity android:name=".HistorySingleActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".RatingCustomerActivity" />
-        <activity android:name=".ProfileRegisterActivity"/>
+        <activity android:name=".FreelancerProfileRegisterActivity"/>
         <activity android:name=".VerifyActivity" />
         <activity android:name=".CustomerChatActivity" />
         <activity android:name=".FreelancerChatActivity" />

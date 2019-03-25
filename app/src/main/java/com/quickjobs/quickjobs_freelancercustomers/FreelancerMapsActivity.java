@@ -48,6 +48,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -112,7 +113,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         userNameNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navName);
         userImageNav = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.navImage);
         userPhoneNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navPhone);
-        updateFreelancerNavHeader();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         polylines = new ArrayList<>();
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -121,13 +122,32 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
         mapFragment.getMapAsync(this);
 
-
+        updateFreelancerNavHeader();
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE).withListener(new MultiplePermissionsListener() {
             @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
             @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
         }).check();
 
+        String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(uidd).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
+                    startActivity(new Intent(FreelancerMapsActivity.this,FreelancerProfileRegisterActivity.class));
+
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         startstopbtns = (LinearLayout)findViewById(R.id.startstopbtns);
@@ -261,7 +281,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                       if (dataSnapshot.exists()){
+                       if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()>3){
                            String name = dataSnapshot.child("name").getValue().toString();
                            String phone = dataSnapshot.child("phone").getValue().toString();
                            String image = dataSnapshot.child("profileImageUrl").getValue().toString();

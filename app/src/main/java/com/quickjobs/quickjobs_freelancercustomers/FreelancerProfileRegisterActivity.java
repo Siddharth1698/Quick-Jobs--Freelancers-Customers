@@ -8,16 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -35,7 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileRegisterActivity extends AppCompatActivity {
+public class FreelancerProfileRegisterActivity extends AppCompatActivity {
 
     private Toolbar myToolbar;
     private CircleImageView profileImage;
@@ -59,7 +55,7 @@ public class ProfileRegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_register);
+        setContentView(R.layout.activity_freelancer_profile_register);
 
         mAuth = FirebaseAuth.getInstance();
         RootRef = FirebaseDatabase.getInstance().getReference();
@@ -144,13 +140,13 @@ public class ProfileRegisterActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-                        Intent registerIntent = new Intent(ProfileRegisterActivity.this,FreelancerMapsActivity.class);
+                        Intent registerIntent = new Intent(FreelancerProfileRegisterActivity.this,FreelancerMapsActivity.class);
                         startActivity(registerIntent);
-                        Toast.makeText(ProfileRegisterActivity.this,"Account Created Succesfully",Toast.LENGTH_SHORT);
+                        Toast.makeText(FreelancerProfileRegisterActivity.this,"Account Created Succesfully",Toast.LENGTH_SHORT);
 
                     }else {
                         String error = task.getException().toString();
-                        Toast.makeText(ProfileRegisterActivity.this,error,Toast.LENGTH_SHORT);
+                        Toast.makeText(FreelancerProfileRegisterActivity.this,error,Toast.LENGTH_SHORT);
                     }
                 }
             });
@@ -181,14 +177,14 @@ public class ProfileRegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(ProfileRegisterActivity.this, "Image uploaded succesfully...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FreelancerProfileRegisterActivity.this, "Image uploaded succesfully...", Toast.LENGTH_SHORT).show();
                             final String downloadUrl = task.getResult().getDownloadUrl().toString();
 
                             RootRef.child("Users").child("Freelancers").child(currentUserId).child("profileImageUrl").setValue(downloadUrl).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(ProfileRegisterActivity.this, "Image saved in db succesfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FreelancerProfileRegisterActivity.this, "Image saved in db succesfully", Toast.LENGTH_SHORT).show();
                                         ((CircleImageView) findViewById(R.id.profile_register_picture)).setImageURI(resultUri);
                                         RootRef.child("Users").child("Freelancers").child(currentUserId).child("profileImageUrl").setValue(downloadUrl);
                                         Picasso.get().load(resultUri).into(prof_reg_pic);
@@ -196,13 +192,13 @@ public class ProfileRegisterActivity extends AppCompatActivity {
 
 
                                     } else {
-                                        Toast.makeText(ProfileRegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(FreelancerProfileRegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
                             });
                         } else {
-                            Toast.makeText(ProfileRegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FreelancerProfileRegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
 
 
                         }

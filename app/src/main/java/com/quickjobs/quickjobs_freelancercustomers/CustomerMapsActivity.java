@@ -123,6 +123,24 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
             public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
         }).check();
 
+        String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uidd).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
+                    startActivity(new Intent(CustomerMapsActivity.this,CustomerProfileRegistrationActivity.class));
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         mFreelancerInfo = (LinearLayout) findViewById(R.id.freelancerInfo);
         mFreelancerProfileImage = (ImageView) findViewById(R.id.freelancerProfileImage);
         mFreelancerName = (TextView) findViewById(R.id.freelancerName);
@@ -208,6 +226,37 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         });
 
 
+        FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uidd).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+               if (!dataSnapshot.exists()){
+                     startActivity(new Intent(CustomerMapsActivity.this,CustomerProfileRegistrationActivity.class));
+                     return;
+               }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private void updateCustomerNavHeader() {
@@ -217,7 +266,7 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()>3){
                     String name = dataSnapshot.child("name").getValue().toString();
                     String phone = dataSnapshot.child("phone").getValue().toString();
                     String image = dataSnapshot.child("profileImageUrl").getValue().toString();
