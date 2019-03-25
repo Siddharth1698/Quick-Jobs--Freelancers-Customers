@@ -615,7 +615,7 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
                     } else {
                         request.setText("freelancer Found: " + String.valueOf(distance));
                     }
-                    freelancerMarker = mMap.addMarker(new MarkerOptions().position(freelancerLatLng).title("Your freelancer"));
+                    freelancerMarker = mMap.addMarker(new MarkerOptions().position(freelancerLatLng).title("Your freelancer").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_freelancer)));
 
                 }
 
