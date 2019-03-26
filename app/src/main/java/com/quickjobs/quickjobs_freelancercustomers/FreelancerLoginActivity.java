@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class FreelancerLoginActivity extends AppCompatActivity {
     private EditText mEmail,mPassword;
-    private Button mLogin,mRegister;
+    private Button mLogin,mRegister,phonelogin;
     private FirebaseAuth auth;
     private FirebaseAuth.AuthStateListener firebaseAuthListner;
     private FirebaseUser user;
@@ -49,10 +49,18 @@ public class FreelancerLoginActivity extends AppCompatActivity {
         mPassword = (EditText) findViewById(R.id.passwordFreelancer);
         mLogin = (Button)findViewById(R.id.loginFreelancerBtn);
         mRegister = (Button)findViewById(R.id.registerFreelancerBtn);
+        phonelogin = (Button)findViewById(R.id.phonelogin);
 
 
 
 
+        phonelogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FreelancerLoginActivity.this,OTPVerificationActivityTwo.class));
+                return;
+            }
+        });
 
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override

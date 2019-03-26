@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutAppActivity"></activity>
+        <activity android:name=".OTPVerificationActivityTwo"></activity>
+        <activity android:name=".AboutAppActivity" />
         <activity android:name=".InviteActivity" />
         <activity android:name=".LocalJobsActivity" />
         <activity android:name=".OTPVerificationActivity" />
