@@ -136,6 +136,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
+
                     startActivity(new Intent(FreelancerMapsActivity.this,FreelancerProfileRegisterActivity.class));
 
                     return;

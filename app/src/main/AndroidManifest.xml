@@ -19,12 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".LocalJobsActivity"></activity>
         <activity android:name=".CustomerProfileRegistrationActivity" />
-        <activity android:name=".WelcomeActivity"/>
+        <activity android:name=".WelcomeActivity" />
         <activity android:name=".HistorySingleActivity" />
         <activity android:name=".HistoryActivity" />
         <activity android:name=".RatingCustomerActivity" />
-        <activity android:name=".FreelancerProfileRegisterActivity"/>
+        <activity android:name=".FreelancerProfileRegisterActivity" />
         <activity android:name=".VerifyActivity" />
         <activity android:name=".CustomerChatActivity" />
         <activity android:name=".FreelancerChatActivity" />
@@ -53,22 +54,17 @@
             android:label="@string/title_activity_freelancers_maps" />
         <activity android:name=".CustomerLoginActivity" />
         <activity android:name=".FreelancerLoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-       <activity android:name=".SplashScreenActivity">
-           <intent-filter>
-               <action android:name="android.intent.action.MAIN" />
-
-               <category android:name="android.intent.category.LAUNCHER" />
-           </intent-filter>
-
-
-       </activity>
-
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
 
         <uses-library
             android:name="org.apache.http.legacy"
