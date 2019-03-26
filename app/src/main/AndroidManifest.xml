@@ -22,6 +22,7 @@
         <activity android:name=".AboutAppActivity"></activity>
         <activity android:name=".InviteActivity" />
         <activity android:name=".LocalJobsActivity" />
+        <activity android:name=".OTPVerificationActivity" />
         <activity android:name=".CustomerProfileRegistrationActivity" />
         <activity android:name=".WelcomeActivity" />
         <activity android:name=".HistorySingleActivity" />
