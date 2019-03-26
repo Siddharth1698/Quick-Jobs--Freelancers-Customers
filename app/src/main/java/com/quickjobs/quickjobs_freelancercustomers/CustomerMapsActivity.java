@@ -41,6 +41,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import de.hdodenhof.circleimageview.CircleImageView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -128,7 +129,7 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uidd).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<2){
                     startActivity(new Intent(CustomerMapsActivity.this,CustomerProfileRegistrationActivity.class));
                     return;
                 }

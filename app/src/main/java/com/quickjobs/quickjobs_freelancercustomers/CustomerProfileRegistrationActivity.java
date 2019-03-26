@@ -80,7 +80,7 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
 //
 //        }
 
-        profileImage = (CircleImageView)findViewById(R.id.profile_register_picture);
+        profileImage = (CircleImageView) findViewById(R.id.profile_register_picture);
         profileName = (EditText)findViewById(R.id.profile_register_name);
         profileAddress = (EditText)findViewById(R.id.profile_register_address);
         profilePhone = (EditText) findViewById(R.id.profile_register_phone);
