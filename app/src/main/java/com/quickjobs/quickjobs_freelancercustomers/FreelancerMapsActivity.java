@@ -160,11 +160,11 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         mCustomerName = (TextView) findViewById(R.id.customerName);
         mCustomerPhone = (TextView) findViewById(R.id.customerPhone);
         mCustomerAddress = (TextView)findViewById(R.id.customerDescription);
-        mSettings = (Button)findViewById(R.id.settingsFreelancer);
-        logoutfreelancer = (Button)findViewById(R.id.logoutFreelancer);
+
+
         AcceptJobBtn = (Button)findViewById(R.id.AcceptJobBtn);
         DeclineJobBtn = (Button)findViewById(R.id.DeclineJobBtn);
-        freelancerhistorybtn = (Button)findViewById(R.id.freelancerhistorybtn);
+
 
 
         AcceptJobBtn.setOnClickListener(new View.OnClickListener() {
@@ -198,17 +198,6 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
                }
         });
 
-        freelancerhistorybtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent=new Intent(FreelancerMapsActivity.this,HistoryActivity.class);
-                intent.putExtra("customerOrDriver", "Freelancers");
-                startActivity(intent);
-                return;
-
-            }
-        });
 
 
 
@@ -244,32 +233,11 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         });
 
 
-        logoutfreelancer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isLoggingOut = true;
 
-                dissconnectFreelancer();
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(FreelancerMapsActivity.this,MainActivity.class);
-                startActivity(intent);
-                finish();
-                return;
-            }
-        });
 
         getAssignedCustomer();
 
-        mSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                isLoggingOut=true;
-                Intent intent=new Intent(FreelancerMapsActivity.this,FreelancerSettingsActivity.class);
-                startActivity(intent);
-                return;
-            }
-        });
 
 
     }
@@ -340,18 +308,35 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+
+            Intent intent=new Intent(FreelancerMapsActivity.this,HistoryActivity.class);
+            intent.putExtra("customerOrDriver", "Freelancers");
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_gallery) {
+
+
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+            Intent intent=new Intent(FreelancerMapsActivity.this,FreelancerSettingsActivity.class);
+            startActivity(intent);
+        } else if ((id == R.id.nav_about)){
 
-        } else if (id == R.id.nav_send) {
+        }else if ((id == R.id.nav_logout)){
+            isLoggingOut = true;
+
+            dissconnectFreelancer();
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(FreelancerMapsActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+
 
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

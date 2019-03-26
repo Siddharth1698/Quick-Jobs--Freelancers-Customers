@@ -147,26 +147,17 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         mFreelancerName = (TextView) findViewById(R.id.freelancerName);
         customerChatBtn = (Button) findViewById(R.id.customerChatBtn);
 
-        logout = (Button) findViewById(R.id.logoutCustomer);
+
         request = (Button) findViewById(R.id.request);
-        settings = (Button) findViewById(R.id.settings);
+
 
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-        history = (Button) findViewById(R.id.history);
+
         customerVerifyBtn = (Button) findViewById(R.id.customerVerifyBtn);
         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent intent = new Intent(CustomerMapsActivity.this,MainActivity.class);
-//                startActivity(intent);
-//                finish();
-//                return;
-//            }
-//        });
+
 
         request.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,27 +182,8 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
             }
         });
-        settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                Intent intent = new Intent(CustomerMapsActivity.this, CustomerSettingsActivity.class);
-                startActivity(intent);
-                return;
-            }
-        });
 
-        history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(CustomerMapsActivity.this, HistoryActivity.class);
-                intent.putExtra("customerOrDriver", "Customers");
-                startActivity(intent);
-                return;
-
-            }
-        });
 
         customerChatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -326,16 +298,29 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+
+            Intent intent = new Intent(CustomerMapsActivity.this, HistoryActivity.class);
+                    intent.putExtra("customerOrDriver", "Customers");
+                    startActivity(intent);
+        }
+        else if (id == R.id.nav_gallery) {
+
+
 
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
 
-        } else if (id == R.id.nav_share) {
+            Intent intent = new Intent(CustomerMapsActivity.this, CustomerSettingsActivity.class);
+            startActivity(intent);
+        } else if ((id == R.id.nav_about)){
 
-        } else if (id == R.id.nav_send) {
+        }else if ((id == R.id.nav_logout)){
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(CustomerMapsActivity.this,MainActivity.class);
+            startActivity(intent);
+            finish();
+
 
         }
 

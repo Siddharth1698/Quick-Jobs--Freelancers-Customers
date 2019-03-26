@@ -3,6 +3,8 @@ package com.quickjobs.quickjobs_freelancercustomers;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.internal.ViewUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,6 +48,7 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
 
     private TextView rideLocation;
     private TextView rideDistance;
+    private CameraUpdate cameraUpdate;
     private TextView rideDate;
     private TextView userName;
     private TextView userPhone;
@@ -255,9 +259,10 @@ public class HistorySingleActivity extends AppCompatActivity implements OnMapRea
         int width = getResources().getDisplayMetrics().widthPixels;
         int padding = (int) (width*0.2);
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
 
-        mMap.animateCamera(cameraUpdate);
+            cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+            mMap.animateCamera(cameraUpdate);
+
 
         mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("pickup location"));
         mMap.addMarker(new MarkerOptions().position(destinationLatLng).title("destination"));

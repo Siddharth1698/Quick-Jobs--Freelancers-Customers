@@ -14,14 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_freelancer_map"
-        app:menu="@menu/activity_freelancer_map_drawer" />
+
 
 
 
@@ -30,24 +23,7 @@
     android:layout_height="match_parent">
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        android:id="@+id/logoutFreelancer"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-        android:layout_gravity="right"
-        android:id="@+id/settingsFreelancer"/>
 
-    <Button
-        android:layout_marginTop="80dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/freelancerhistorybtn"
-        android:text="History"/>
 
     <fragment
         android:id="@+id/map"
@@ -165,4 +141,14 @@
 
     </LinearLayout>
 </FrameLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/nav_header_freelancer_map"
+        app:menu="@menu/activity_freelancer_map_drawer" />
+
 </androidx.drawerlayout.widget.DrawerLayout>
