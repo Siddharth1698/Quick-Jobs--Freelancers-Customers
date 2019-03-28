@@ -1,51 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.CustomerHomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
-
-        <EditText
+<androidx.cardview.widget.CardView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/custjobtitle"
-    android:layout_margin="5dp"
-    android:hint="Enter job title"
+    android:layout_margin="15dp"
+    android:layout_height="wrap_content">
 
-    />
-        <EditText
-            android:layout_below="@+id/custjobtitle"
-            android:hint="Job details here"
-            android:id="@+id/custjobdetails"
-            android:layout_margin="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="168dp" />
+    <RelativeLayout android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@+id/custjobdetails"
-        android:orientation="vertical" >
-
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:entries="@array/job_categories"
-            android:prompt="@string/country_prompt" />
+        <!-- TODO: Update blank fragment layout -->
 
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
 
-    </LinearLayout>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/custjobtitle"
+                android:layout_margin="5dp"
+                android:hint="Enter job title"
+
+                />
+            <EditText
+                android:layout_below="@+id/custjobtitle"
+                android:hint="Job details here"
+                android:id="@+id/custjobdetails"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="168dp" />
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:entries="@array/job_categories"
+                android:prompt="@string/country_prompt" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/send_message"
+                />
 
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Submit" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>
+
+</ScrollView>

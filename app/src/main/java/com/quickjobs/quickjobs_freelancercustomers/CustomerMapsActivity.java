@@ -305,6 +305,9 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         }
         else if (id == R.id.nav_gallery) {
 
+            Intent intent = new Intent(CustomerMapsActivity.this, LocalJobsCustomersActivity.class);
+            startActivity(intent);
+
 
 
         } else if (id == R.id.nav_slideshow) {
