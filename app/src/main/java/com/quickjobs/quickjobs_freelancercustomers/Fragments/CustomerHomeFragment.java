@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 
@@ -19,6 +21,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.quickjobs.quickjobs_freelancercustomers.Adapters.HistoryAdapter;
+import com.quickjobs.quickjobs_freelancercustomers.HistoryActivity;
 import com.quickjobs.quickjobs_freelancercustomers.R;
 
 /**
@@ -54,6 +58,10 @@ public class CustomerHomeFragment extends Fragment {
 
 
 
+
+
+
+
         jobbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,8 +77,32 @@ public class CustomerHomeFragment extends Fragment {
                 jobdata.child("loc").setValue(Custloc);
                 jobdata.child("Cat").setValue(Custspin);
                 jobdata.child("Customer").setValue(uidd);
+                jobdata.child("Status").setValue("Posted");
+
+                DatabaseReference jobdata2 = FirebaseDatabase.getInstance().getReference().child("LocalJobsHistory").child(jobid);
+                jobdata2.child("title").setValue(Custtitle);
+                jobdata2.child("desc").setValue(Custdesc);
+                jobdata2.child("loc").setValue(Custloc);
+                jobdata2.child("Cat").setValue(Custspin);
+                jobdata2.child("Customer").setValue(uidd);
+                jobdata2.child("Status").setValue("Posted");
+
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Users").child("Customers").child(uidd).child("localjobshistory").child(jobid).setValue(true);
+//                jobHistory.child("title").setValue(Custtitle);
+//                jobHistory.child("desc").setValue(Custdesc);
+//                jobHistory.child("loc").setValue(Custloc);
+//                jobHistory.child("Cat").setValue(Custspin);
+//                jobHistory.child("Customer").setValue(uidd);
+//                jobHistory.child("Status").setValue("Posted");
+//                Long timestamp = System.currentTimeMillis()/1000;
+//                jobHistory.child("timestamp").setValue(timestamp);
 
                 Toast.makeText(getActivity(),"Job posted succesfully",Toast.LENGTH_SHORT).show();
+
+                title.setText("");
+                desc.setText("");
+                location.setText("");
 
 
 
