@@ -315,7 +315,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
             startActivity(intent);
         }
         else if (id == R.id.nav_gallery) {
-
+            Intent intent=new Intent(FreelancerMapsActivity.this,LocalJobsFreelancersActivity.class);
+            startActivity(intent);
 
 
         } else if (id == R.id.nav_slideshow) {
