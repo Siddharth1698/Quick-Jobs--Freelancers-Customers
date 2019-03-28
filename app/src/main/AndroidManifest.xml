@@ -20,8 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".LocalJobsCustomersActivity"
+            android:label="@string/title_activity_local_jobs_customers"></activity>
+        <activity
             android:name=".LocalJobsFreelancersActivity"
-            android:label="@string/title_activity_local_jobs_freelancers"></activity>
+            android:label="@string/title_activity_local_jobs_freelancers" />
         <activity android:name=".OTPVerificationActivityTwo" />
         <activity android:name=".AboutAppActivity" />
         <activity android:name=".InviteActivity" />
