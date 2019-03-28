@@ -47,12 +47,23 @@
                 android:entries="@array/job_categories"
                 android:prompt="@string/country_prompt" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                android:src="@drawable/send_message"
-                />
+                    <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                        android:id="@+id/custlocjob"
+                    android:hint="Location:"/>
+
+
+
+
+
+            <!--<ImageView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="100dp"-->
+                <!--android:id="@+id/custjobimg"-->
+                <!--android:layout_margin="10dp"-->
+                <!--android:src="@drawable/send_message"-->
+                <!--/>-->
 
 
             <Button

@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.github.jd-alexander:library:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.karumi:dexter:5.0.0'
-
+    compile 'com.google.android.gms:play-services-places:11.0.2'
     implementation 'com.google.android.material:material:1.0.0-beta01'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
     testImplementation 'junit:junit:4.12'
