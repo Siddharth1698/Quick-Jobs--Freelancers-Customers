@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">QuickJobs</string>
+    <string name="country_prompt">Choose a country</string>
     <string name="title_activity_freelancers_maps">Map</string>
     <string name="gethelp">GET HELP</string>
     <string name="work">WORK</string>
@@ -23,4 +24,122 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+<string-array name="job_categories">
+   <item>Air Conditioning</item>
+    <item>Antenna Services</item>
+    <item>Appliance Installation</item>
+    <item>Appliance Repair</item>
+    <item>Asbestos Removal</item>
+    <item>Asphalt</item>
+    <item>Attic Access Ladders Making</item>
+    <item>Awnings</item>
+    <item>Balustrading</item>
+    <item>Bamboo Flooring</item>
+    <item>Bathroom</item>
+    <item>Biometrics</item>
+    <item>Bracket Installation</item>
+    <item>Bricklaying</item>
+    <item>Building</item>
+    <item>Building Certification</item>
+    <item>Building Consulting</item>
+    <item>Building Design</item>
+    <item>Building Surveying</item>
+    <item>Car Washing</item>
+    <item>Carpentry</item>
+    <item>Carpet Cleaning</item>
+    <item>Carpet Repair and Laying</item>
+    <item>Carports</item>
+    <item>Carwashing</item>
+    <item>CCTV</item>
+    <item>Ceiling Installation</item>
+    <item>Cement Bonding Agents</item>
+    <item>Clothesline Installation</item>
+    <item>Column Installation</item>
+    <item>Commercial Cleaning</item>
+    <item>Computer Support</item>
+    <item>Concreting</item>
+    <item>Contact Center Services</item>
+    <item>Cooking and Recipes</item>
+    <item>Cooking / Baking</item>
+    <item>Courses</item>
+    <item>Damp Proofing</item>
+    <item>Decking</item>
+    <item>Decoration</item>
+    <item>Demolition</item>
+    <item>Disposals</item>
+    <item>Domestic Cleaning</item>
+    <item>Drafting</item>
+    <item>Drain Plumbing</item>
+    <item>Drone Photography</item>
+    <item>Electric Repair</item>
+    <item>Embroidery</item>
+    <item>Epic Systems</item>
+    <item>Equipment Rental</item>
+    <item>Event Staffing</item>
+    <item>Excavation</item>
+    <item>Extensions and Additions</item>
+    <item>Fencing</item>
+    <item>Feng Shui</item>
+    <item>Financial Planning</item>
+    <item>Flashmob</item>
+    <item>Floor Coatings</item>
+    <item>Flooring</item>
+    <item>Flyscreen Installation</item>
+    <item>Frames and Trusses</item>
+    <item>Furniture Assembly</item>
+    <item>Gardening</item>
+    <item>Gas Fitting</item>
+    <item>General Labor</item>
+    <item>Glass / Mirror and Glazing</item>
+    <item>Gutter Installation</item>
+    <item>Hair Styles</item>
+    <item>Handyman</item>
+    <item>Heating Systems</item>
+    <item>Home Automation</item>
+    <item>Home Organization</item>
+    <item>Hot Water Installation</item>
+    <item>House Cleaning</item>
+    <item>Housework</item>
+    <item>IKEA Installation</item>
+    <item>Inspections</item>
+    <item>Installation</item>
+    <item>Interiors</item>
+    <item>Kitchen</item>
+    <item>Landscape Design</item>
+    <item>Landscaping</item>
+    <item>Landscaping and Gardening</item>
+    <item>Laundry and Ironing</item>
+    <item>Lawn Mowing</item>
+    <item>Lighting</item>
+    <item>Local Job</item>
+    <item>Locksmith</item>
+    <item>Machinery Equipment Hire</item>
+    <item>Make Up</item>
+    <item>Material Coating</item>
+    <item>Millwork</item>
+    <item>Mortgage Brokering</item>
+    <item>Mural Painting</item>
+    <item>Painting</item>
+    <item>Pavement</item>
+    <item>PC Repair</item>
+    <item>Pest Control</item>
+    <item>Pet Sitting</item>
+    <item>Piping</item>
+    <item>Plumbing</item>
+    <item>Printer Repair</item>
+    <item>Roofing</item>
+    <item>Sculpturing</item>
+    <item>Security Camera</item>
+    <item>Security Systems</item>
+    <item>Sewing</item>
+    <item>Shopping</item>
+    <item>Tiling</item>
+    <item>Upholstery Cleaning</item>
+    <item>Workshops</item>
+    <item>Yard Work and Removal</item>
+</string-array>
+
 </resources>
