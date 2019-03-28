@@ -1,14 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.FreelancerHomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <Spinner
+        android:layout_margin="15dp"
+        android:id="@+id/locspinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"></Spinner>
 
-</FrameLayout>
+    <Spinner
+        android:visibility="gone"
+        android:id="@+id/catspinner"
+        android:layout_margin="15dp"
+        android:layout_below="@+id/locspinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></Spinner>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_below="@+id/catspinner"
+        android:gravity="center"
+        android:id="@+id/sbtbtn"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/sbmtbtn"
+            android:layout_height="wrap_content"
+            android:text="Submit"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/sbmtbtn2"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Submit2"/>
+
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/sbtbtn"
+        android:layout_margin="10dp"
+        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+
+</RelativeLayout>
