@@ -81,8 +81,8 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
                 final List<String> areas = new ArrayList<String>();
 
 
-                for (DataSnapshot Allepy: dataSnapshot.getChildren()) {
-                    areaName = Allepy.getKey().toString();
+                for (DataSnapshot var: dataSnapshot.getChildren()) {
+                    areaName = var.getKey().toString();
                     areas.add(areaName);
                 }
 
