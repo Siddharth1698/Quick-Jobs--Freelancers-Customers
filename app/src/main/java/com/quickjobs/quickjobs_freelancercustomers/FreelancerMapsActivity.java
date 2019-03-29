@@ -2,20 +2,31 @@ package com.quickjobs.quickjobs_freelancercustomers;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.app.ActivityCompat;
 
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,8 +77,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FreelancerMapsActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener, RoutingListener, NavigationView.OnNavigationItemSelectedListener {
+public class FreelancerMapsActivity extends AppCompatActivity implements OnMapReadyCallback,NavigationView.OnNavigationItemSelectedListener,RoutingListener {
 
 
     GoogleMap mMap;
@@ -90,10 +100,14 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     private TextView userNameNav,userPhoneNav;
     private ImageView userImageNav;
 
+    private FusedLocationProviderClient mFusedLocationClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelancers_maps);
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
 
@@ -586,97 +600,107 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        mMap = googleMap;
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        buildGoogleApiClient();
-        mMap.setMyLocationEnabled(true);
-
-
-
-    }
-
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this).addConnectionCallbacks(this).addOnConnectionFailedListener(this).addApi(LocationServices.API).build();
-        mGoogleApiClient.connect();
-    }
-
-
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
-            return;
-        }
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-        if (getApplicationContext()!= null){
-
-
-
-            mLastLocation = location;
-            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
-
-
-            if(!customerId.equals("") && mLastLocation!=null && location != null){
-                rideDistance += mLastLocation.distanceTo(location)/1000;
+            }else{
+                checkLocationPermission();
             }
-
-            DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("FreelancersAvailable");
-            DatabaseReference refWorking = FirebaseDatabase.getInstance().getReference("FreelancersWorking");
-            GeoFire geoFireAvaiable = new GeoFire(refAvailable);
-            GeoFire geoFireWorking = new GeoFire(refWorking);
-
-             switch (customerId){
-                case "":
-                    geoFireWorking.removeLocation(userid);
-                    geoFireAvaiable.setLocation(userid,new GeoLocation(location.getLatitude(),location.getLongitude()));
-                    break;
-
-                default:
-                    geoFireAvaiable.removeLocation(userid);
-                    geoFireWorking.setLocation(userid,new GeoLocation(location.getLatitude(),location.getLongitude()));
-                    break;
-            }
-
         }
 
-
+        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+        mMap.setMyLocationEnabled(true);
     }
+
+    LocationCallback mLocationCallback = new LocationCallback(){
+        @Override
+        public void onLocationResult(LocationResult locationResult) {
+            for(Location location : locationResult.getLocations()){
+                if(getApplicationContext()!=null){
+
+                    if(!customerId.equals("") && mLastLocation!=null && location != null){
+                        rideDistance += mLastLocation.distanceTo(location)/1000;
+                    }
+                    mLastLocation = location;
+
+
+                    LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+
+                    if(!customerId.equals("") && mLastLocation!=null && location != null){
+                        rideDistance += mLastLocation.distanceTo(location)/1000;
+                    }
+
+
+                    DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("FreelancersAvailable");
+                    DatabaseReference refWorking = FirebaseDatabase.getInstance().getReference("FreelancersWorking");
+                    GeoFire geoFireAvaiable = new GeoFire(refAvailable);
+                    GeoFire geoFireWorking = new GeoFire(refWorking);
+
+                    switch (customerId){
+                        case "":
+                            geoFireWorking.removeLocation(userid);
+                            geoFireAvaiable.setLocation(userid,new GeoLocation(location.getLatitude(),location.getLongitude()));
+                            break;
+
+                        default:
+                            geoFireAvaiable.removeLocation(userid);
+                            geoFireWorking.setLocation(userid,new GeoLocation(location.getLatitude(),location.getLongitude()));
+                            break;
+                    }
+
+                }
+            }
+        }
+    };
+
+
+
+    private void checkLocationPermission() {
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                new AlertDialog.Builder(this)
+                        .setTitle("give permission")
+                        .setMessage("give permission message")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ActivityCompat.requestPermissions(FreelancerMapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+                            }
+                        })
+                        .create()
+                        .show();
+            }
+            else{
+                ActivityCompat.requestPermissions(FreelancerMapsActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch(requestCode){
+            case 1:{
+                if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+                        mMap.setMyLocationEnabled(true);
+                    }
+                } else{
+                    Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
+    }
+
 
     private void dissconnectFreelancer(){
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
