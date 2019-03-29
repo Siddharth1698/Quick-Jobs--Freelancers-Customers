@@ -771,7 +771,7 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
 //                    if(!getDriversAroundStarted)
 //                        getDriversAround();
                 }
