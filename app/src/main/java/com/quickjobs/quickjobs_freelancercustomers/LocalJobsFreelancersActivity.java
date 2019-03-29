@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -38,7 +39,9 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
 
     String uidd;
     Spinner areaSpinner,catSpinner;
-    Button sbmtbtn,sbmtbtn2;
+    Button sbmtbtn,sbmtbtn2,searchagainbtn;
+    LinearLayout linlayfree,linlayfirst;
+    RecyclerView freerecyclerview;
     private String areaName,loc,cat;
 
     private RecyclerView mHistoryRecyclerView;
@@ -58,7 +61,10 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
         uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
         sbmtbtn = (Button)findViewById(R.id.sbmtbtn);
         sbmtbtn2 = (Button)findViewById(R.id.sbmtbtn2);
-
+        linlayfree = (LinearLayout)findViewById(R.id.linlayfree);
+        linlayfirst = (LinearLayout)findViewById(R.id.linlayfirst);
+        freerecyclerview = (RecyclerView)findViewById(R.id.freeljrecyclerview);
+        searchagainbtn = (Button)findViewById(R.id.searchagainbtn);
 
 
         mHistoryRecyclerView = (RecyclerView) findViewById(R.id.freeljrecyclerview);
@@ -140,19 +146,41 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
                     }
                 });
 
+                areaSpinner.setEnabled(false);
             }
+
         });
 
         sbmtbtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resultsHistory.clear();
 
+                catSpinner.setVisibility(View.VISIBLE);
+
+                areaSpinner.setEnabled(true);
+                sbmtbtn2.setVisibility(View.GONE);
+                freerecyclerview.setVisibility(View.VISIBLE);
+                linlayfree.setVisibility(View.VISIBLE);
+                linlayfirst.setVisibility(View.GONE);
                 cat = String.valueOf(catSpinner.getSelectedItem());
-
                 getUserHistoryIds();
+
+
       }
 
+        });
+
+        searchagainbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resultsHistory.clear();
+                sbmtbtn.setVisibility(View.VISIBLE);
+                linlayfree.setVisibility(View.GONE);
+                linlayfirst.setVisibility(View.VISIBLE);
+                freerecyclerview.setVisibility(View.GONE);
+                catSpinner.setAdapter(null);
+                catSpinner.setVisibility(View.GONE);
+            }
         });
 
 

@@ -5,43 +5,75 @@
     android:layout_height="match_parent"
     tools:context=".LocalJobsFreelancersActivity">
 
-    <Spinner
-        android:layout_margin="15dp"
-        android:id="@+id/locspinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
-
-    <Spinner
-        android:visibility="gone"
-        android:id="@+id/catspinner"
-        android:layout_margin="15dp"
-        android:layout_below="@+id/locspinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></Spinner>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_below="@+id/catspinner"
-        android:gravity="center"
-        android:id="@+id/sbtbtn"
+        android:orientation="vertical"
+        android:id="@+id/linlayfree"
+        android:visibility="gone"
         android:layout_height="wrap_content">
-        <Button
-            android:layout_width="wrap_content"
-            android:id="@+id/sbmtbtn"
-            android:layout_height="wrap_content"
-            android:text="Submit"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:id="@+id/sbmtbtn2"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="Submit2"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/textljf"
+            android:layout_height="wrap_content"
+            android:text="These are the local jobs avaiable:"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_below="@+id/textljf"
+            android:layout_height="wrap_content"
+            android:id="@+id/searchagainbtn"
+            android:text="Search again"/>
 
     </LinearLayout>
 
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/linlayfirst"
+       android:orientation="vertical">
+
+       <Spinner
+           android:layout_margin="15dp"
+           android:id="@+id/locspinner"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"></Spinner>
+
+       <Spinner
+           android:visibility="gone"
+           android:id="@+id/catspinner"
+           android:layout_margin="15dp"
+           android:layout_below="@+id/locspinner"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"></Spinner>
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_below="@+id/catspinner"
+           android:gravity="center"
+           android:id="@+id/sbtbtn"
+           android:layout_height="wrap_content">
+           <Button
+               android:layout_width="wrap_content"
+               android:id="@+id/sbmtbtn"
+               android:layout_height="wrap_content"
+               android:text="Select Place"/>
+           <Button
+               android:layout_width="wrap_content"
+               android:id="@+id/sbmtbtn2"
+               android:layout_height="wrap_content"
+               android:visibility="gone"
+               android:text="Select Category"/>
+
+
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_below="@+id/sbtbtn"
+        android:layout_below="@+id/linlayfree"
+        android:visibility="gone"
         android:layout_margin="10dp"
         android:id="@+id/freeljrecyclerview"
         android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
