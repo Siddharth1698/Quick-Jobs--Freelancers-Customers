@@ -95,12 +95,12 @@ String uidd;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String title = "",desc="",location="",cat="",loc="";
+                    String title = "",desc="",location="",cat="",phno="";
 
                    title = dataSnapshot.child("title").getValue().toString();
                     desc = dataSnapshot.child("desc").getValue().toString();
                     cat = dataSnapshot.child("Cat").getValue().toString();
-                    loc = dataSnapshot.child("loc").getValue().toString();
+                    phno = dataSnapshot.child("phno").getValue().toString();
                     Long timestamp = 0L;
 
 
@@ -112,7 +112,7 @@ String uidd;
 
 
 
-                    CustomerHistoryLJObject obj = new CustomerHistoryLJObject(title,desc,location,cat,getDate(timestamp));
+                    CustomerHistoryLJObject obj = new CustomerHistoryLJObject(title,desc,phno,cat,getDate(timestamp));
                     resultsHistory.add(obj);
                     mHistoryAdapter.notifyDataSetChanged();
                 }

@@ -31,18 +31,19 @@ import com.quickjobs.quickjobs_freelancercustomers.R;
 public class CustomerHomeFragment extends Fragment {
     private String Custtitle,Custdesc,Custloc,Custimg,Custspin;
     private Spinner spinner1;
-    private EditText title,desc,location;
+    private EditText title,desc,location,phno;
     //private ImageView jobimg;
     private Button jobbtn;
 
 
+    Long timestamp = System.currentTimeMillis()/1000;
 
 
     public CustomerHomeFragment() {
         // Required empty public constructor
     }
 
-    private String jobid;
+    private String jobid,phnum;
     private String uidd;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +53,7 @@ public class CustomerHomeFragment extends Fragment {
         desc = view.findViewById(R.id.custjobdetails);
         location = view.findViewById(R.id.custlocjob);
         spinner1 = view.findViewById(R.id.spinner1);
+        phno = view.findViewById(R.id.custphonenumber);
         //jobimg = view.findViewById(R.id.custjobimg);
         jobbtn = view.findViewById(R.id.btnSubmit);
         uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -69,6 +71,7 @@ public class CustomerHomeFragment extends Fragment {
                 Custtitle = title.getText().toString();
                 Custdesc = desc.getText().toString();
                 Custloc = location.getText().toString();
+                phnum = phno.getText().toString();
                 Custspin = String.valueOf(spinner1.getSelectedItem());
                 jobid = FirebaseDatabase.getInstance().getReference().child("LocalJobs").child(Custloc).child(Custspin).push().getKey();
                 DatabaseReference jobdata = FirebaseDatabase.getInstance().getReference().child("LocalJobs").child(Custloc).child(Custspin).child(jobid);
@@ -77,6 +80,8 @@ public class CustomerHomeFragment extends Fragment {
                 jobdata.child("loc").setValue(Custloc);
                 jobdata.child("Cat").setValue(Custspin);
                 jobdata.child("Customer").setValue(uidd);
+                jobdata.child("timestamp").setValue(timestamp);
+                jobdata.child("phno").setValue(phnum);
                 jobdata.child("Status").setValue("Posted");
 
                 DatabaseReference jobdata2 = FirebaseDatabase.getInstance().getReference().child("LocalJobsHistory").child(jobid);
@@ -84,6 +89,8 @@ public class CustomerHomeFragment extends Fragment {
                 jobdata2.child("desc").setValue(Custdesc);
                 jobdata2.child("loc").setValue(Custloc);
                 jobdata2.child("Cat").setValue(Custspin);
+                jobdata2.child("phno").setValue(phnum);
+                jobdata2.child("timestamp").setValue(timestamp);
                 jobdata2.child("Customer").setValue(uidd);
                 jobdata2.child("Status").setValue("Posted");
 
@@ -95,14 +102,13 @@ public class CustomerHomeFragment extends Fragment {
 //                jobHistory.child("Cat").setValue(Custspin);
 //                jobHistory.child("Customer").setValue(uidd);
 //                jobHistory.child("Status").setValue("Posted");
-//                Long timestamp = System.currentTimeMillis()/1000;
-//                jobHistory.child("timestamp").setValue(timestamp);
 
                 Toast.makeText(getActivity(),"Job posted succesfully",Toast.LENGTH_SHORT).show();
 
                 title.setText("");
                 desc.setText("");
                 location.setText("");
+                phno.setText("");
 
 
 

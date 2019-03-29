@@ -39,6 +39,16 @@
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="168dp" />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:id="@+id/custphonenumber"
+                android:inputType="number"
+                android:hint="Phone number for contact"/>
+
             <Spinner
                 android:id="@+id/spinner1"
                 android:layout_width="match_parent"
@@ -57,13 +67,6 @@
 
 
 
-            <!--<ImageView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="100dp"-->
-                <!--android:id="@+id/custjobimg"-->
-                <!--android:layout_margin="10dp"-->
-                <!--android:src="@drawable/send_message"-->
-                <!--/>-->
 
 
             <Button

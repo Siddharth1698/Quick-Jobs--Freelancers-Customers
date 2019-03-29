@@ -19,8 +19,10 @@ import android.widget.TextView;
 public class LocalJobsCustomersActivity extends AppCompatActivity {
 
 
-    Fragment HomeFragment = new CustomerHomeFragment();
+
     private TextView mTextMessage;
+
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,7 +44,7 @@ public class LocalJobsCustomersActivity extends AppCompatActivity {
 
                     return true;
                 case R.id.navigation_dashboard:
-                    fragment = new CustomerChatsFragment();
+                    fragment = new CustomerHistoryFragment();
                     if (fragment != null) {
                         getSupportFragmentManager()
                                 .beginTransaction()
@@ -61,8 +63,14 @@ public class LocalJobsCustomersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_jobs_customers);
+        Fragment HomeFragment = new CustomerHomeFragment();
 
-
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container_cust, HomeFragment)
+                    .commit();
+        }
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
