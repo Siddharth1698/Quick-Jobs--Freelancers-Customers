@@ -66,8 +66,8 @@ private DatabaseReference historyDatabase;
         mHistoryRecyclerView.setAdapter(mHistoryAdapter);
         mHistoryAdapter.notifyDataSetChanged();
 
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(mHistoryRecyclerView);
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+//        itemTouchHelper.attachToRecyclerView(mHistoryRecyclerView);
 
 
 
@@ -106,7 +106,7 @@ String uidd;
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String title = "",desc="",phno="",status="";
+                    String title = "",desc="",phno="",status="",riderkey="";
                     loc="";
                     cat="";
                     RideKey = rideKey;
@@ -116,7 +116,8 @@ String uidd;
                     cat = dataSnapshot.child("Cat").getValue().toString();
                     phno = dataSnapshot.child("phno").getValue().toString();
                     loc = dataSnapshot.child("loc").getValue().toString();
-                    status = dataSnapshot.child("Status").getValue().toString();
+//                    status = dataSnapshot.child("Status").getValue().toString();
+                    riderkey = dataSnapshot.child("ridekey").getValue().toString();
                     Long timestamp = 0L;
 
 
@@ -128,7 +129,7 @@ String uidd;
 
 
 
-                    CustomerHistoryLJObject obj = new CustomerHistoryLJObject(title,desc,phno,cat,getDate(timestamp),status);
+                    CustomerHistoryLJObject obj = new CustomerHistoryLJObject(title,desc,loc,cat,getDate(timestamp),phno,riderkey);
                     resultsHistory.add(obj);
                     mHistoryAdapter.notifyDataSetChanged();
                 }
@@ -145,29 +146,40 @@ String uidd;
         String date = DateFormat.format("MM-dd-yyyy hh:mm", cal).toString();
         return date;
     }
-    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+//    ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
+//
+//        @Override
+//        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//            Toast.makeText(getActivity(), "on Move", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
+//
 
-        @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-            Toast.makeText(getActivity(), "on Move", Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
 
-
-
-        @Override
-        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-            Toast.makeText(getActivity(), "on Swiped ", Toast.LENGTH_SHORT).show();
-            //Remove swiped item from list and notify the RecyclerView
-
-            
-            int position = viewHolder.getAdapterPosition();
-            resultsHistory.remove(position);
-            mHistoryAdapter.notifyDataSetChanged();
-
-        }
-    };
+//        @Override
+//        public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+//            Toast.makeText(getActivity(), "on Swiped ", Toast.LENGTH_SHORT).show();
+//            //Remove swiped item from list and notify the RecyclerView
+//            int position = viewHolder.getAdapterPosition();
+////            resultsHistory.remove(position);
+//            FirebaseDatabase.getInstance().getReference().orderByChild("LocalJobsHistory").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//            mHistoryAdapter.notifyDataSetChanged();
+//
+//        }
+//    };
 
     private ArrayList resultsHistory = new ArrayList<CustomerHistoryLJObject>();
     private ArrayList<CustomerHistoryLJObject> getDataSetHistory() {

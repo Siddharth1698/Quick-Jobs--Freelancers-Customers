@@ -82,6 +82,7 @@ public class CustomerHomeFragment extends Fragment {
                 jobdata.child("Customer").setValue(uidd);
                 jobdata.child("timestamp").setValue(timestamp);
                 jobdata.child("phno").setValue(phnum);
+                jobdata.child("ridekey").setValue(jobid);
                 jobdata.child("Status").setValue("Posted");
 
                 DatabaseReference jobdata2 = FirebaseDatabase.getInstance().getReference().child("LocalJobsHistory").child(jobid);
@@ -89,6 +90,7 @@ public class CustomerHomeFragment extends Fragment {
                 jobdata2.child("desc").setValue(Custdesc);
                 jobdata2.child("loc").setValue(Custloc);
                 jobdata2.child("Cat").setValue(Custspin);
+                jobdata2.child("ridekey").setValue(jobid);
                 jobdata2.child("phno").setValue(phnum);
                 jobdata2.child("timestamp").setValue(timestamp);
                 jobdata2.child("Customer").setValue(uidd);
@@ -114,8 +116,6 @@ public class CustomerHomeFragment extends Fragment {
 
             }
         });
-
-
 
 
         return view;

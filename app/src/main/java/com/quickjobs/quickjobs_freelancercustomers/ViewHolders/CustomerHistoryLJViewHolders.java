@@ -14,7 +14,7 @@ import com.quickjobs.quickjobs_freelancercustomers.R;
 
 public class CustomerHistoryLJViewHolders extends RecyclerView.ViewHolder {
 
-    public TextView title,desc,location,cat,status;
+    public TextView title,desc,location,cat,status,ridekey;
     public TextView time;
     private String db;
     public CustomerHistoryLJViewHolders(View itemView) {
@@ -26,6 +26,7 @@ public class CustomerHistoryLJViewHolders extends RecyclerView.ViewHolder {
         location = (TextView) itemView.findViewById(R.id.histloc);
         desc = (TextView) itemView.findViewById(R.id.histdesc);
         status = (TextView) itemView.findViewById(R.id.histstatus);
+        ridekey = (TextView) itemView.findViewById(R.id.ridekey);
 
 
 

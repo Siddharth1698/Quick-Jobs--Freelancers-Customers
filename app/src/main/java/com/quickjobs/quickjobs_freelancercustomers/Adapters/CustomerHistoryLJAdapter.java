@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -47,7 +48,25 @@ public class CustomerHistoryLJAdapter  extends RecyclerView.Adapter<CustomerHist
     }
 
     @Override
-    public void onBindViewHolder(CustomerHistoryLJViewHolders holder, final int position) {
+    public void onBindViewHolder(final CustomerHistoryLJViewHolders holder, final int position) {
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                String location = itemList.get(position).getLocation();
+                String category = itemList.get(position).getCat();
+                String ridekey = itemList.get(position).getRidekey();
+                Toast.makeText(context,"hello",Toast.LENGTH_SHORT).show();
+                FirebaseDatabase.getInstance().getReference().child("LocalJobsHistory").child(ridekey).removeValue();
+                FirebaseDatabase.getInstance().getReference().child("LocalJobs").child(location).child(category).child(ridekey).removeValue();
+
+                itemList.remove(position);
+                notifyItemRemoved(position);
+                return false;
+            }
+        });
+
+
         holder.title.setText(itemList.get(position).getTitle());
         holder.desc.setText(itemList.get(position).getDesc());
         holder.status.setText(itemList.get(position).getStatus());
