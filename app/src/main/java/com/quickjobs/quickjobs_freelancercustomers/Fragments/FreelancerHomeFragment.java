@@ -30,7 +30,7 @@ public class FreelancerHomeFragment extends Fragment {
     String uidd;
     Spinner areaSpinner,catSpinner;
     Button sbmtbtn,sbmtbtn2;
-    private String areaName,loc;
+    private String areaName,loc,cat;
 
 
     public FreelancerHomeFragment() {
@@ -115,6 +115,16 @@ public class FreelancerHomeFragment extends Fragment {
 
             }
         });
+
+            }
+        });
+
+        sbmtbtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cat = String.valueOf(catSpinner.getSelectedItem());
+
+
 
             }
         });

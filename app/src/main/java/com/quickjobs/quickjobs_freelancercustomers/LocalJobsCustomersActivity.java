@@ -51,26 +51,7 @@ public class LocalJobsCustomersActivity extends AppCompatActivity {
                         return true;
                     }
                     return true;
-                case R.id.navigation_notifications:
-                    fragment = new CustomerHistoryFragment();
-                    if (fragment != null) {
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container_cust, fragment)
-                                .commit();
-                        return true;
-                    }
-                    return true;
-                case R.id.navigation_settings:
-                    fragment = new CustomerSettingsFragment();
-                    if (fragment != null) {
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.fragment_container_cust, fragment)
-                                .commit();
-                        return true;
-                    }
-                    return true;
+
             }
             return false;
         }
