@@ -5,17 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
-    private Button mCustomer,mFreelancer;
+    private LinearLayout mCustomer,mFreelancer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mCustomer = (Button)findViewById(R.id.customer);
-        mFreelancer =(Button)findViewById(R.id.freelancer);
+        mCustomer = (LinearLayout) findViewById(R.id.customer);
+        mFreelancer =(LinearLayout) findViewById(R.id.freelancer);
 
         mFreelancer.setOnClickListener(new View.OnClickListener() {
             @Override

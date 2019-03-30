@@ -7,53 +7,79 @@
     android:background="@drawable/qjsgradient"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/freelancer"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="200dp"
-        android:background="@drawable/roundbox"
-        android:fontFamily="@font/slabo_13px"
-        android:text="@string/work"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:typeface="normal" />
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/freelancer"
+            android:gravity="center"
+            android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/customer"
-        android:text="@string/gethelp"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="200dp"
-        android:background="@drawable/roundbox"
-        android:fontFamily="@font/slabo_13px"
-        android:textColor="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <de.hdodenhof.circleimageview.CircleImageView
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="300dp"
-        android:layout_above="@+id/freelancer"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="155dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="27dp"
-        android:contentDescription="@string/qjslogo"
-        app:srcCompat="@drawable/logosplashwithtag" />
+                android:layout_width="130dp"
+                android:layout_margin="15dp"
+
+                android:layout_height="200dp"
+                android:src="@drawable/workicon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WORK"
+                android:fontFamily="@font/slabo_13px"
+                android:padding="12dp"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/customer"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+
+                android:text="@string/gethelp"
+                android:layout_margin="15dp"
+
+                android:layout_width="130dp"
+                android:layout_height="200dp"
+
+
+                android:src="@drawable/hireicon"
+                android:fontFamily="@font/slabo_13px"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GET HELP"
+                android:fontFamily="@font/slabo_13px"
+                android:padding="12dp"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
 
 
 </RelativeLayout>
