@@ -79,7 +79,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
         phlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CustomerLoginActivity.this,OTPVerificationActivity.class));
+                startActivity(new Intent(CustomerLoginActivity.this,OTPVerificationActivityTwo.class));
                 return;
             }
         });
