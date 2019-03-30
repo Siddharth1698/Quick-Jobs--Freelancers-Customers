@@ -5,10 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.quickjobs.quickjobs_freelancercustomers.Fragments.CustomerChatsFragment;
 import com.quickjobs.quickjobs_freelancercustomers.Fragments.CustomerHistoryFragment;
 import com.quickjobs.quickjobs_freelancercustomers.Fragments.CustomerHomeFragment;
-import com.quickjobs.quickjobs_freelancercustomers.Fragments.CustomerSettingsFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
