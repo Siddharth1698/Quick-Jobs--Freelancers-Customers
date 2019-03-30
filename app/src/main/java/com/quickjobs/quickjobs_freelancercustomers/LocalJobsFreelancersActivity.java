@@ -218,7 +218,7 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
                     title = dataSnapshot.child("title").getValue().toString();
                     desc = dataSnapshot.child("desc").getValue().toString();
                     cat = dataSnapshot.child("Cat").getValue().toString();
-                    loc = dataSnapshot.child("loc").getValue().toString();
+                    location = dataSnapshot.child("phno").getValue().toString();
                     Long timestamp = 0L;
 
 

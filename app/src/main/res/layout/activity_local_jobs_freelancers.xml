@@ -90,7 +90,7 @@
         android:layout_margin="10dp"
         android:id="@+id/freeljrecyclerview"
         android:layout_height="match_parent">
-        
+
     </androidx.recyclerview.widget.RecyclerView>
 
 
