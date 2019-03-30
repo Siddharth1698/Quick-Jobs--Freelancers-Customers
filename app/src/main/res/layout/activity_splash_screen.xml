@@ -3,10 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:gravity="center"
+    android:background="@drawable/qjsgradient"
     android:layout_height="match_parent">
 
     <ImageView
+        android:layout_margin="40dp"
         android:layout_width="match_parent"
+        android:src="@drawable/logosplashwithtag"
         android:layout_height="match_parent" />
 
 </RelativeLayout>
