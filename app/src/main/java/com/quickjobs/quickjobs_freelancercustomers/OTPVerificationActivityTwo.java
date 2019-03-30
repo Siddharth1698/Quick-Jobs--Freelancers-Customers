@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -32,6 +33,8 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private ProgressDialog loadingBar;
     CountryCodePicker ccp;
+    Pinview pinview1;
+    String verificationCode;
 
 
     @Override
@@ -41,15 +44,30 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        pinview1= (Pinview) findViewById(R.id.pinview1);
         sendVerificationButton = (Button)findViewById(R.id.send_verification_button);
         VerifyButton = (Button)findViewById(R.id.verify_button);
         InputPhoneNumber = (EditText)findViewById(R.id.phone_number_input);
-        InputVerificationCode = (EditText)findViewById(R.id.verification_code_input);
+//        InputVerificationCode = (EditText)findViewById(R.id.verification_code_input);
         loadingBar = new ProgressDialog(this);
         ccp.registerCarrierNumberEditText(InputPhoneNumber);
+
+
+
+        pinview1.setPinViewEventListener(new Pinview.PinViewEventListener() {
+            @Override
+            public void onDataEntered(Pinview pinview, boolean fromUser) {
+                verificationCode = pinview.getValue();
+            }
+        });
+
+
+
+
         sendVerificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
 
                 String phoneNumber = InputPhoneNumber.getText().toString();
@@ -84,7 +102,6 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
                 sendVerificationButton.setVisibility(View.INVISIBLE);
                 ccp.setVisibility(View.INVISIBLE);
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
-                String verificationCode =  InputVerificationCode.getText().toString();
                 if (TextUtils.isEmpty(verificationCode)) {
                     Toast.makeText(OTPVerificationActivityTwo.this,"Empty Code",Toast.LENGTH_SHORT);
 
@@ -117,7 +134,7 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
                 ccp.setVisibility(View.VISIBLE);
 
                 VerifyButton.setVisibility(View.INVISIBLE);
-                InputVerificationCode.setVisibility(View.INVISIBLE);
+                pinview1.setVisibility(View.INVISIBLE);
 
             }
 
@@ -134,7 +151,7 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
 
                 VerifyButton.setVisibility(View.VISIBLE);
-                InputVerificationCode.setVisibility(View.VISIBLE);
+                pinview1.setVisibility(View.VISIBLE);
                 ccp.setVisibility(View.INVISIBLE);
             }
         };

@@ -17,7 +17,11 @@ buildscript {
 }
 
 allprojects {
-    repositories {configurations.all {
+    repositories {
+        maven { url 'https://jitpack.io' }
+
+
+        configurations.all {
         resolutionStrategy.eachDependency { DependencyResolveDetails details ->
             def requested = details.requested
             if (requested.group == 'com.google.android.gms') {

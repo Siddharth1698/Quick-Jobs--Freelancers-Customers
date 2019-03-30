@@ -35,22 +35,29 @@
 
 
 
-    <EditText
-        android:id="@+id/verification_code_input"
+    <com.goodiebag.pinview.Pinview
+        android:id="@+id/pinview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:pinWidth="30dp"
+        app:pinHeight="30dp"
+        app:pinLength="6"
+        android:layout_below="@+id/phno"
+
+        app:cursorVisible="false"
+        app:forceKeyboard="true"
+        app:hint="0"
+
         android:layout_alignParentStart="true"
         android:layout_marginStart="17dp"
         android:layout_marginEnd="17dp"
         android:layout_marginTop="4dp"
+        android:visibility="invisible"
 
         android:padding="5dp"
-        android:layout_below="@+id/phno"
-        android:hint="Enter the Verification Code"
-        android:visibility="invisible"
-        android:textAllCaps="false"
-        android:textSize="15sp"
-        android:textStyle="bold"/>
+        app:inputType="number"
+        app:password="false"/>
+
 
     <Button
         android:id="@+id/send_verification_button"
@@ -58,7 +65,7 @@
         android:layout_height="wrap_content"
         android:background="#FF6663"
         android:text="Send Verification Code"
-        android:layout_below="@+id/verification_code_input"
+        android:layout_below="@+id/pinview1"
         android:layout_marginStart="17dp"
         android:layout_marginEnd="17dp"
         android:layout_marginTop="4dp"
