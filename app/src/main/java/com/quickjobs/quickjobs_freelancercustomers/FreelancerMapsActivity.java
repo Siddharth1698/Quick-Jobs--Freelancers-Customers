@@ -335,12 +335,16 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
 
         } else if (id == R.id.nav_slideshow) {
+            Intent intent=new Intent(FreelancerMapsActivity.this,InviteActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_manage) {
 
             Intent intent=new Intent(FreelancerMapsActivity.this,FreelancerSettingsActivity.class);
             startActivity(intent);
         } else if ((id == R.id.nav_about)){
+            Intent intent=new Intent(FreelancerMapsActivity.this,AboutAppActivity.class);
+            startActivity(intent);
 
         }else if ((id == R.id.nav_logout)){
             isLoggingOut = true;

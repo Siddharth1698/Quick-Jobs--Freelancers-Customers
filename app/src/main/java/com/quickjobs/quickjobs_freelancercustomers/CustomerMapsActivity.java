@@ -322,12 +322,17 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
 
         } else if (id == R.id.nav_slideshow) {
+            Intent intent=new Intent(CustomerMapsActivity.this,InviteActivity.class);
+            startActivity(intent);
+
 
         } else if (id == R.id.nav_manage) {
 
             Intent intent = new Intent(CustomerMapsActivity.this, CustomerSettingsActivity.class);
             startActivity(intent);
         } else if ((id == R.id.nav_about)){
+            Intent intent=new Intent(CustomerMapsActivity.this,AboutAppActivity.class);
+            startActivity(intent);
 
         }else if ((id == R.id.nav_logout)){
             FirebaseAuth.getInstance().signOut();
