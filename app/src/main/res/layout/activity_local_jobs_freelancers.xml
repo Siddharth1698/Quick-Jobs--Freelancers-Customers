@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/qjsgradient"
     tools:context=".LocalJobsFreelancersActivity">
 
     <LinearLayout
@@ -55,12 +56,24 @@
                android:layout_width="wrap_content"
                android:id="@+id/sbmtbtn"
                android:layout_height="wrap_content"
+               android:background="@drawable/roundbox"
+               android:fontFamily="@font/slabo_13px"
+
+               android:textColor="@color/colorPrimary"
+               android:padding="10dp"
+               android:textStyle="bold"
                android:text="Select Place"/>
            <Button
                android:layout_width="wrap_content"
                android:id="@+id/sbmtbtn2"
                android:layout_height="wrap_content"
                android:visibility="gone"
+               android:background="@drawable/roundbox"
+               android:fontFamily="@font/slabo_13px"
+
+               android:textColor="@color/colorPrimary"
+               android:padding="10dp"
+               android:textStyle="bold"
                android:text="Select Category"/>
 
 
@@ -76,7 +89,9 @@
         android:visibility="gone"
         android:layout_margin="10dp"
         android:id="@+id/freeljrecyclerview"
-        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent">
+        
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </RelativeLayout>
