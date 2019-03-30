@@ -623,6 +623,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         mLocationRequest.setFastestInterval(1000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
+
+
         if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
 
@@ -633,6 +635,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         mMap.setMyLocationEnabled(true);
+
     }
 
     LocationCallback mLocationCallback = new LocationCallback(){
@@ -650,6 +653,10 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()))
+                            .title("Freelancer")
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.freelancerjob)));
 
                     if(!customerId.equals("") && mLastLocation!=null && location != null){
                         rideDistance += mLastLocation.distanceTo(location)/1000;

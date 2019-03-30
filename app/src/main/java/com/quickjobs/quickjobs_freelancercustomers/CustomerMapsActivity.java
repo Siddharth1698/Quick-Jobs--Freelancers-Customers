@@ -778,6 +778,7 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
         mMap.setMyLocationEnabled(true);
 
+
     }
     LocationCallback mLocationCallback = new LocationCallback(){
         @Override
@@ -790,6 +791,11 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()))
+                            .title("Customer")
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.customerjob)));
+
 //                    if(!getDriversAroundStarted)
 //                        getDriversAround();
                 }
