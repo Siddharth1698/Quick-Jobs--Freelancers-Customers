@@ -41,9 +41,12 @@
         <activity android:name=".VerifyActivity" />
         <activity android:name=".CustomerChatActivity" />
         <activity android:name=".FreelancerChatActivity" />
-        <activity android:name=".FreelancerSettingsActivity" />
-        <activity android:name=".CustomerSettingsActivity" />
-        <activity android:name=".CustomerMapsActivity" />
+        <activity android:name=".FreelancerSettingsActivity"
+            android:allowBackup="true"/>
+        <activity android:name=".CustomerSettingsActivity"
+            android:allowBackup="true"/>
+        <activity android:name=".CustomerMapsActivity"
+            android:allowBackup="true"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -63,6 +66,7 @@
 
         <activity
             android:name=".FreelancerMapsActivity"
+            android:allowBackup="true"
             android:label="@string/title_activity_freelancers_maps" />
         <activity android:name=".CustomerLoginActivity" />
         <activity android:name=".FreelancerLoginActivity" />

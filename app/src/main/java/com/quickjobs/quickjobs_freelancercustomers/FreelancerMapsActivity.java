@@ -106,6 +106,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelancers_maps);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 

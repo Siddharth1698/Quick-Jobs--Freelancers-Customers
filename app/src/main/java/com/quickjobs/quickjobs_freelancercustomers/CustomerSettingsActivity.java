@@ -62,6 +62,8 @@ public class CustomerSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_settings);
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         mName = (EditText)findViewById(R.id.name);
         mPhone = (EditText)findViewById(R.id.phone);
         mConfirm = (Button)findViewById(R.id.confirm);
