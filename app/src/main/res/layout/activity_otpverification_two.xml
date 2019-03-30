@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/qjsgradient"
     android:layout_height="match_parent"
 
     tools:context=".OTPVerificationActivityTwo">
@@ -39,8 +40,8 @@
         android:id="@+id/pinview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pinWidth="30dp"
-        app:pinHeight="30dp"
+        app:pinWidth="35dp"
+        app:pinHeight="40dp"
         app:pinLength="6"
         android:layout_below="@+id/phno"
 
@@ -63,7 +64,7 @@
         android:id="@+id/send_verification_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF6663"
+        android:background="#57335E"
         android:text="Send Verification Code"
         android:layout_below="@+id/pinview1"
         android:layout_marginStart="17dp"
@@ -81,6 +82,7 @@
         android:layout_below="@+id/send_verification_button"
         android:layout_marginStart="17dp"
         android:layout_marginEnd="17dp"
+        android:background="#57335E"
         android:layout_marginTop="4dp"
 
         android:visibility="invisible"
