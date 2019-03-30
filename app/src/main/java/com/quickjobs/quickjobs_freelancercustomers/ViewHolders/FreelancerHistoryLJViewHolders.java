@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FreelancerHistoryLJViewHolders  extends RecyclerView.ViewHolder{
 
-    public TextView title,desc,location,cat;
+    public TextView title,desc,location,cat,phno;
     public TextView time;
     public FreelancerHistoryLJViewHolders(View itemView) {
         super(itemView);
@@ -19,6 +19,7 @@ public class FreelancerHistoryLJViewHolders  extends RecyclerView.ViewHolder{
         cat = (TextView) itemView.findViewById(R.id.histcat);
         location = (TextView) itemView.findViewById(R.id.histloc);
         desc = (TextView) itemView.findViewById(R.id.histdesc);
+
 
     }
 

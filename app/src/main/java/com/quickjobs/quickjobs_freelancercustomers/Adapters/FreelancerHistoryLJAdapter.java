@@ -1,11 +1,17 @@
 package com.quickjobs.quickjobs_freelancercustomers.Adapters;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.quickjobs.quickjobs_freelancercustomers.Objects.FreelancerHistoryLJObject;
 import com.quickjobs.quickjobs_freelancercustomers.R;
 
@@ -38,6 +44,18 @@ public class FreelancerHistoryLJAdapter extends RecyclerView.Adapter<FreelancerH
 
     @Override
     public void onBindViewHolder(FreelancerHistoryLJViewHolders holder, final int position) {
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                String phno = itemList.get(position).getPhno();
+
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phno));
+                context.startActivity(intent);
+                return false;
+            }
+        });
+
         holder.title.setText(itemList.get(position).getTitle());
         holder.desc.setText(itemList.get(position).getDesc());
         holder.location.setText(itemList.get(position).getLocation());

@@ -213,12 +213,13 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    String title = "",desc="",location="",cat="",loc="";
+                    String title = "",desc="",location="",cat="",loc="",phno="";
 
                     title = dataSnapshot.child("title").getValue().toString();
                     desc = dataSnapshot.child("desc").getValue().toString();
                     cat = dataSnapshot.child("Cat").getValue().toString();
                     location = dataSnapshot.child("phno").getValue().toString();
+                    phno = dataSnapshot.child("phno").getValue().toString();
                     Long timestamp = 0L;
 
 
@@ -230,7 +231,7 @@ public class LocalJobsFreelancersActivity extends AppCompatActivity {
 
 
 
-                    FreelancerHistoryLJObject obj = new FreelancerHistoryLJObject(title,desc,location,cat,getDate(timestamp));
+                    FreelancerHistoryLJObject obj = new FreelancerHistoryLJObject(title,desc,location,cat,getDate(timestamp),phno);
                     resultsHistory.add(obj);
                     mHistoryAdapter.notifyDataSetChanged();
                 }

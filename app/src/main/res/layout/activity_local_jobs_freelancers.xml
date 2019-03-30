@@ -17,11 +17,19 @@
             android:layout_width="match_parent"
             android:id="@+id/textljf"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/slabo_13px"
+            android:textStyle="bold"
             android:text="These are the local jobs avaiable:"/>
         <Button
             android:layout_width="match_parent"
             android:layout_below="@+id/textljf"
             android:layout_height="wrap_content"
+            android:background="@drawable/roundbox"
+            android:fontFamily="@font/slabo_13px"
+
+            android:textColor="@color/colorPrimary"
+            android:padding="10dp"
+            android:textStyle="bold"
             android:id="@+id/searchagainbtn"
             android:text="Search again"/>
 
