@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.material.navigation.NavigationView;
 import androidx.core.app.ActivityCompat;
 
@@ -27,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Looper;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -605,6 +608,16 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        try {
+            // Customise map styling via JSON file
+            boolean success = googleMap.setMapStyle( MapStyleOptions.loadRawResourceStyle( this, R.raw.maps_style));
+
+            if (!success) {
+
+            }
+        } catch (Resources.NotFoundException e) {
+
+        }
         mLocationRequest = new LocationRequest();
         mLocationRequest.setInterval(1000);
         mLocationRequest.setFastestInterval(1000);
@@ -636,7 +649,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
 
                     if(!customerId.equals("") && mLastLocation!=null && location != null){
                         rideDistance += mLastLocation.distanceTo(location)/1000;
