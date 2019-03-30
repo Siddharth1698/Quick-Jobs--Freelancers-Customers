@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,6 +32,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private ProgressDialog loadingBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +43,12 @@ public class OTPVerificationActivity extends AppCompatActivity {
         VerifyButton = (Button)findViewById(R.id.verify_button);
         InputPhoneNumber = (EditText)findViewById(R.id.phone_number_input);
         InputVerificationCode = (EditText)findViewById(R.id.verification_code_input);
+
         loadingBar = new ProgressDialog(this);
         sendVerificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
 
                 String phoneNumber = InputPhoneNumber.getText().toString();

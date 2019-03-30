@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +31,8 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private ProgressDialog loadingBar;
+    CountryCodePicker ccp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +40,20 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
         setContentView(R.layout.activity_otpverification_two);
 
         mAuth = FirebaseAuth.getInstance();
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
         sendVerificationButton = (Button)findViewById(R.id.send_verification_button);
         VerifyButton = (Button)findViewById(R.id.verify_button);
         InputPhoneNumber = (EditText)findViewById(R.id.phone_number_input);
         InputVerificationCode = (EditText)findViewById(R.id.verification_code_input);
         loadingBar = new ProgressDialog(this);
+        ccp.registerCarrierNumberEditText(InputPhoneNumber);
         sendVerificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 
                 String phoneNumber = InputPhoneNumber.getText().toString();
+                phoneNumber = "+91" + phoneNumber;
                 if (TextUtils.isEmpty(phoneNumber)){
                     Toast.makeText(OTPVerificationActivityTwo.this,"Phone number is required",Toast.LENGTH_SHORT);
                 }else {
@@ -76,6 +82,7 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendVerificationButton.setVisibility(View.INVISIBLE);
+                ccp.setVisibility(View.INVISIBLE);
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
                 String verificationCode =  InputVerificationCode.getText().toString();
                 if (TextUtils.isEmpty(verificationCode)) {
@@ -107,6 +114,7 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
                 Toast.makeText(OTPVerificationActivityTwo.this,"Invalid Code",Toast.LENGTH_SHORT);
                 sendVerificationButton.setVisibility(View.VISIBLE);
                 InputPhoneNumber.setVisibility(View.VISIBLE);
+                ccp.setVisibility(View.VISIBLE);
 
                 VerifyButton.setVisibility(View.INVISIBLE);
                 InputVerificationCode.setVisibility(View.INVISIBLE);
@@ -127,6 +135,7 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
 
                 VerifyButton.setVisibility(View.VISIBLE);
                 InputVerificationCode.setVisibility(View.VISIBLE);
+                ccp.setVisibility(View.INVISIBLE);
             }
         };
     }

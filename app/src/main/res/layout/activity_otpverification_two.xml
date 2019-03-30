@@ -7,21 +7,32 @@
     android:layout_height="match_parent"
 
     tools:context=".OTPVerificationActivityTwo">
-
-    <EditText
-        android:id="@+id/phone_number_input"
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_width="match_parent"
+        android:id="@+id/phno"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginTop="180dp"
-        android:padding="8dp"
-        android:hint="Enter your mobile number here"
-        android:textAllCaps="false"
-        android:textSize="15sp"
+        android:gravity="center_vertical">
 
-        android:textStyle="bold"/>
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/ccp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccp_countryPreference="us,in"
+            />
+
+        <EditText
+            android:id="@+id/phone_number_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:editable="false"
+            android:hint="phone"
+            android:inputType="phone"
+            android:singleLine="true" />
+    </LinearLayout>
+
 
 
     <EditText
@@ -34,7 +45,7 @@
         android:layout_marginTop="4dp"
 
         android:padding="5dp"
-        android:layout_below="@+id/phone_number_input"
+        android:layout_below="@+id/phno"
         android:hint="Enter the Verification Code"
         android:visibility="invisible"
         android:textAllCaps="false"

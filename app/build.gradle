@@ -36,6 +36,8 @@ dependencies {
     implementation 'com.firebase:geofire-android:2.1.1'
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
     implementation 'com.google.firebase:firebase-core:11.0.2'
+    implementation 'com.hbb20:ccp:2.2.6'
+
 
     implementation 'com.github.jd-alexander:library:1.1.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
