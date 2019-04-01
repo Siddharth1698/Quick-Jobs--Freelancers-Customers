@@ -68,6 +68,7 @@ public class HistoryActivity  extends AppCompatActivity {
             }
         });
     }
+    private String jobd;
 
     private void FetchRideInformation(String rideKey) {
         DatabaseReference historyDatabase = FirebaseDatabase.getInstance().getReference().child("History").child(rideKey);
@@ -84,11 +85,14 @@ public class HistoryActivity  extends AppCompatActivity {
                     if(dataSnapshot.child("timestamp").getValue() != null){
                         timestamp = Long.valueOf(dataSnapshot.child("timestamp").getValue().toString());
                     }
+                    if(dataSnapshot.child("destination").getValue() != null){
+                        jobd = dataSnapshot.child("destination").getValue().toString();
+                    }
 
 
 
 
-                    HistoryObject obj = new HistoryObject(rideId, getDate(timestamp));
+                    HistoryObject obj = new HistoryObject(rideId, getDate(timestamp),jobd);
                     resultsHistory.add(obj);
                     mHistoryAdapter.notifyDataSetChanged();
                 }

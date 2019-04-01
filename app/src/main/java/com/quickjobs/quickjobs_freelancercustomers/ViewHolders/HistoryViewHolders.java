@@ -11,7 +11,7 @@ import com.quickjobs.quickjobs_freelancercustomers.R;
 
 public class HistoryViewHolders  extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-    public TextView rideId;
+    public TextView rideId,jobd;
     public TextView time;
     public HistoryViewHolders(View itemView) {
         super(itemView);
@@ -19,6 +19,7 @@ public class HistoryViewHolders  extends RecyclerView.ViewHolder implements View
 
         rideId = (TextView) itemView.findViewById(R.id.rideId);
         time = (TextView) itemView.findViewById(R.id.time);
+        jobd = (TextView) itemView.findViewById(R.id.jobd);
     }
 
 

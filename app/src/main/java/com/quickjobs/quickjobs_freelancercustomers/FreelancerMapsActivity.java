@@ -653,10 +653,6 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
                     mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()))
-                            .title("Freelancer")
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.freelancerjob)));
 
                     if(!customerId.equals("") && mLastLocation!=null && location != null){
                         rideDistance += mLastLocation.distanceTo(location)/1000;

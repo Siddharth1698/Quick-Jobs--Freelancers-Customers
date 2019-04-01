@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context="HistoryActivity"
     android:fitsSystemWindows="true"
+    android:background="@drawable/qjsgradient"
     android:orientation="vertical"
     android:id="@+id/layout">
 

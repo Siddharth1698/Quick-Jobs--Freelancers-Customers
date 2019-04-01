@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.FirebaseDatabase;
 import com.quickjobs.quickjobs_freelancercustomers.R;
 import com.quickjobs.quickjobs_freelancercustomers.Objects.HistoryObject;
 import com.quickjobs.quickjobs_freelancercustomers.ViewHolders.HistoryViewHolders;
@@ -34,6 +35,8 @@ public class HistoryAdapter  extends RecyclerView.Adapter<HistoryViewHolders> {
 
     @Override
     public void onBindViewHolder(HistoryViewHolders holder, final int position) {
+
+        holder.jobd.setText(itemList.get(position).getJobd());
         holder.rideId.setText(itemList.get(position).getRideId());
         if(itemList.get(position).getTime()!=null){
             holder.time.setText(itemList.get(position).getTime());
