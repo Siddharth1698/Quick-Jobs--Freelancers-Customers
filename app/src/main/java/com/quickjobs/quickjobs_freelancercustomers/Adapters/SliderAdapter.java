@@ -28,9 +28,9 @@ public class SliderAdapter extends PagerAdapter {
     };
 
     public String[] slide_desc = {
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard",
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard"
+            "Find jobs nearby without any hassle and you dont need to be a techy!",
+            "Choose the right guy for your job and get it done!",
+            "Pay the guy if you're satisfied or else dont! Get paid more for doing it in a better way"
 
 
     };
