@@ -325,11 +325,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
             Intent intent=new Intent(FreelancerMapsActivity.this,FreelancerSettingsActivity.class);
             startActivity(intent);
-        } else if ((id == R.id.nav_about)){
-            Intent intent=new Intent(FreelancerMapsActivity.this,AboutAppActivity.class);
-            startActivity(intent);
-
-        }else if ((id == R.id.nav_logout)){
+        } else if ((id == R.id.nav_logout)){
             isLoggingOut = true;
 
             dissconnectFreelancer();
