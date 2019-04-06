@@ -1,5 +1,6 @@
 package com.quickjobs.quickjobs_freelancercustomers;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import androidx.annotation.NonNull;
@@ -17,6 +18,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+
+import java.util.List;
 
 public class CustomerLoginActivity extends AppCompatActivity {
     private EditText mEmail,mPassword;
@@ -45,11 +53,20 @@ public class CustomerLoginActivity extends AppCompatActivity {
                 }
             }
         };
+
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE).withListener(new MultiplePermissionsListener() {
+            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
+            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
+        }).check();
+
+        
         mEmail = (EditText)findViewById(R.id.emailCustomer);
         mPassword = (EditText) findViewById(R.id.passwordCustomer);
         mLogin = (Button)findViewById(R.id.loginCustomerBtn);
         mRegister = (Button)findViewById(R.id.registerCustomerBtn);
         phlogin = (Button)findViewById(R.id.phonelogin);
+
 
 
         mRegister.setOnClickListener(new View.OnClickListener() {

@@ -111,6 +111,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_freelancers_maps);
 
 
+
+
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
 
@@ -137,11 +139,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE).withListener(new MultiplePermissionsListener() {
-            @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
-            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
-        }).check();
+
 
 
         mapFragment.getMapAsync(this);
