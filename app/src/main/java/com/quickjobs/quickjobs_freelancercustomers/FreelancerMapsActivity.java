@@ -34,8 +34,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,6 +92,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
+    private Switch mWorkingSwitch;
     LocationRequest mLocationRequest;
     private Button logoutfreelancer,mSettings,AcceptJobBtn,DeclineJobBtn;
     private String userid,uid;
@@ -152,6 +155,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
 
 
+
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         startstopbtns = (LinearLayout)findViewById(R.id.startstopbtns);
         mJobStatus =(Button)findViewById(R.id.fsb) ;
@@ -164,6 +168,17 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         mCustomerPhone = (TextView) findViewById(R.id.customerPhone);
         mCustomerAddress = (TextView)findViewById(R.id.customerDescription);
 
+        mWorkingSwitch = (Switch) findViewById(R.id.workingSwitch);
+        mWorkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    connectFreelancer();
+                }else{
+                    dissconnectFreelancer();
+                }
+            }
+        });
 
         AcceptJobBtn = (Button)findViewById(R.id.AcceptJobBtn);
         DeclineJobBtn = (Button)findViewById(R.id.DeclineJobBtn);
@@ -242,6 +257,13 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
 
 
+
+    }
+
+    private void connectFreelancer() {
+            checkLocationPermission();
+            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+            mMap.setMyLocationEnabled(true);
 
     }
 
@@ -334,10 +356,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
             dissconnectFreelancer();
 
             FirebaseAuth.getInstance().signOut();
-            FirebaseDatabase.getInstance().getReference().child("FreelancersAvailable").child(userid).removeValue();
             Intent intent = new Intent(FreelancerMapsActivity.this,MainActivity.class);
             startActivity(intent);
-            FirebaseDatabase.getInstance().getReference().child("FreelancersAvailable").child(userid).removeValue();
             finish();
 
 
@@ -588,6 +608,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     }
 
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -720,15 +741,6 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         geoFire.removeLocation(userid);
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (!isLoggingOut){
-           dissconnectFreelancer();
-        }
-
-
-    }
 
 
 

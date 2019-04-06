@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
         mCustomer = (LinearLayout) findViewById(R.id.customer);
         mFreelancer =(LinearLayout) findViewById(R.id.freelancer);
 
+        startService(new Intent(MainActivity.this, onAppKilled.class));
+
         mFreelancer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -70,6 +70,7 @@
             android:label="@string/title_activity_freelancers_maps" />
         <activity android:name=".CustomerLoginActivity" />
         <activity android:name=".FreelancerLoginActivity" />
+        <service android:name=".onAppKilled" android:stopWithTask="false"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".SplashScreenActivity">
             <intent-filter>
