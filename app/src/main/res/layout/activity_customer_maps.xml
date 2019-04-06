@@ -113,6 +113,11 @@
                 android:id="@+id/request"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/roundbox"
+                android:fontFamily="@font/slabo_13px"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 android:layout_gravity="bottom"
                 android:text="Get Things Done" />
 

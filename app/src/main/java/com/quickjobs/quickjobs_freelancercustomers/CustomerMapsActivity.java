@@ -430,7 +430,10 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
                                 @Override
                                 public void onChildRemoved(DataSnapshot dataSnapshot) {
                                     mFreelancerInfo.setVisibility(View.GONE);
-                                    freelancerMarker.remove();
+                                    if (freelancerMarker != null){
+                                        freelancerMarker.remove();
+                                    }
+
                                     request.setText("Get Things Done");
                                     Toast.makeText(CustomerMapsActivity.this,"Sorry... Freelancer canceled your request",Toast.LENGTH_SHORT);
                                     Toast.makeText(getApplicationContext(), "Freelancer cancelled your request...", Toast.LENGTH_SHORT);

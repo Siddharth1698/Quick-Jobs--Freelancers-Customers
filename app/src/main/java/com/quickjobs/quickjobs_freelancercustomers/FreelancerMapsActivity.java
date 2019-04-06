@@ -62,6 +62,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -84,6 +85,9 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
 
     GoogleMap mMap;
+    private FirebaseAuth.AuthStateListener firebaseAuthListner;
+    private FirebaseUser user;
+
     GoogleApiClient mGoogleApiClient;
     Location mLastLocation;
     LocationRequest mLocationRequest;
@@ -327,11 +331,13 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
             startActivity(intent);
         } else if ((id == R.id.nav_logout)){
             isLoggingOut = true;
-
             dissconnectFreelancer();
+
             FirebaseAuth.getInstance().signOut();
+            FirebaseDatabase.getInstance().getReference().child("FreelancersAvailable").child(userid).removeValue();
             Intent intent = new Intent(FreelancerMapsActivity.this,MainActivity.class);
             startActivity(intent);
+            FirebaseDatabase.getInstance().getReference().child("FreelancersAvailable").child(userid).removeValue();
             finish();
 
 
@@ -381,7 +387,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
             startstopbtns.setVisibility(View.GONE);
         FirebaseDatabase.getInstance().getReference().child("Chats").child(userid).removeValue();
             String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userId).child("CustomerRequest");
+            DatabaseReference freelancerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(userId)
+                    .child("CustomerRequest");
             freelancerRef.setValue(true);
         rideDistance = 0;
 
@@ -617,7 +624,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     LocationCallback mLocationCallback = new LocationCallback(){
         @Override
         public void onLocationResult(LocationResult locationResult) {
-            for(Location location : locationResult.getLocations()){
+            for(final Location location : locationResult.getLocations()){
                 if(getApplicationContext()!=null){
 
                     if(!customerId.equals("") && mLastLocation!=null && location != null){
@@ -635,15 +642,19 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
                     }
 
 
+
+
+
                     DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("FreelancersAvailable");
                     DatabaseReference refWorking = FirebaseDatabase.getInstance().getReference("FreelancersWorking");
-                    GeoFire geoFireAvaiable = new GeoFire(refAvailable);
+                    final GeoFire geoFireAvaiable = new GeoFire(refAvailable);
                     GeoFire geoFireWorking = new GeoFire(refWorking);
 
                     switch (customerId){
                         case "":
                             geoFireWorking.removeLocation(userid);
                             geoFireAvaiable.setLocation(userid,new GeoLocation(location.getLatitude(),location.getLongitude()));
+
                             break;
 
                         default:
@@ -700,9 +711,11 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
 
     private void dissconnectFreelancer(){
+        if(mFusedLocationClient != null){
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        }
         String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("FreelancersAvailable");
-
         GeoFire geoFire = new GeoFire(ref);
         geoFire.removeLocation(userid);
     }
