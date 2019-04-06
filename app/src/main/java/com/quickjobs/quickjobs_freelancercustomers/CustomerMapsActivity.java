@@ -141,21 +141,6 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
         String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uidd).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<2){
-                    startActivity(new Intent(CustomerMapsActivity.this,CustomerProfileRegistrationActivity.class));
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         mFreelancerInfo = (LinearLayout) findViewById(R.id.freelancerInfo);
         mFreelancerProfileImage = (ImageView) findViewById(R.id.freelancerProfileImage);

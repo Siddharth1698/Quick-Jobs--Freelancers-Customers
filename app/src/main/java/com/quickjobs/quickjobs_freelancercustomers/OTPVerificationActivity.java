@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.goodiebag.pinview.Pinview;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -16,6 +17,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
@@ -31,20 +36,38 @@ public class OTPVerificationActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private ProgressDialog loadingBar;
+    CountryCodePicker ccp;
+    Pinview pinview1;
+    String verificationCode;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_otpverification);
+        setContentView(R.layout.activity_otpverification_two);
 
         mAuth = FirebaseAuth.getInstance();
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        pinview1= (Pinview) findViewById(R.id.pinview1);
         sendVerificationButton = (Button)findViewById(R.id.send_verification_button);
         VerifyButton = (Button)findViewById(R.id.verify_button);
         InputPhoneNumber = (EditText)findViewById(R.id.phone_number_input);
-        InputVerificationCode = (EditText)findViewById(R.id.verification_code_input);
-
+//        InputVerificationCode = (EditText)findViewById(R.id.verification_code_input);
         loadingBar = new ProgressDialog(this);
+        ccp.registerCarrierNumberEditText(InputPhoneNumber);
+
+
+
+        pinview1.setPinViewEventListener(new Pinview.PinViewEventListener() {
+            @Override
+            public void onDataEntered(Pinview pinview, boolean fromUser) {
+                verificationCode = pinview.getValue();
+            }
+        });
+
+
+
+
         sendVerificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +75,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
 
 
                 String phoneNumber = InputPhoneNumber.getText().toString();
+                phoneNumber = "+91" + phoneNumber;
                 if (TextUtils.isEmpty(phoneNumber)){
                     Toast.makeText(OTPVerificationActivity.this,"Phone number is required",Toast.LENGTH_SHORT);
                 }else {
@@ -60,7 +84,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
                     loadingBar.setMessage("Rolling up soon...");
                     loadingBar.setCanceledOnTouchOutside(false);
                     loadingBar.show();
-                    Intent i = new Intent(OTPVerificationActivity.this, FreelancerMapsActivity.class);
+                    Intent i = new Intent(OTPVerificationActivity.this, CustomerMapsActivity.class);
                     i.putExtra("phone", "99");
 
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -74,12 +98,14 @@ public class OTPVerificationActivity extends AppCompatActivity {
             }
         });
 
+
+
         VerifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendVerificationButton.setVisibility(View.INVISIBLE);
+                ccp.setVisibility(View.INVISIBLE);
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
-                String verificationCode =  InputVerificationCode.getText().toString();
                 if (TextUtils.isEmpty(verificationCode)) {
                     Toast.makeText(OTPVerificationActivity.this,"Empty Code",Toast.LENGTH_SHORT);
 
@@ -109,9 +135,10 @@ public class OTPVerificationActivity extends AppCompatActivity {
                 Toast.makeText(OTPVerificationActivity.this,"Invalid Code",Toast.LENGTH_SHORT);
                 sendVerificationButton.setVisibility(View.VISIBLE);
                 InputPhoneNumber.setVisibility(View.VISIBLE);
+                ccp.setVisibility(View.VISIBLE);
 
                 VerifyButton.setVisibility(View.INVISIBLE);
-                InputVerificationCode.setVisibility(View.INVISIBLE);
+                pinview1.setVisibility(View.INVISIBLE);
 
             }
 
@@ -128,7 +155,8 @@ public class OTPVerificationActivity extends AppCompatActivity {
                 InputPhoneNumber.setVisibility(View.INVISIBLE);
 
                 VerifyButton.setVisibility(View.VISIBLE);
-                InputVerificationCode.setVisibility(View.VISIBLE);
+                pinview1.setVisibility(View.VISIBLE);
+                ccp.setVisibility(View.INVISIBLE);
             }
         };
     }
@@ -142,7 +170,31 @@ public class OTPVerificationActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             loadingBar.dismiss();
                             Toast.makeText(OTPVerificationActivity.this,"You are in...",Toast.LENGTH_SHORT);
-                            SendUserToMainActivity();
+
+                            String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                            FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(uidd).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
+
+                                        startActivity(new Intent(OTPVerificationActivity.this,CustomerProfileRegistrationActivity.class));
+                                        finish();
+                                    }else {
+                                        SendUserToMainActivity();
+                                        finish();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
 
 
 
@@ -157,7 +209,7 @@ public class OTPVerificationActivity extends AppCompatActivity {
     }
 
     private void SendUserToMainActivity() {
-        Intent mainIntent = new Intent(OTPVerificationActivity.this,FreelancerMapsActivity.class);
+        Intent mainIntent = new Intent(OTPVerificationActivity.this,CustomerMapsActivity.class);
         startActivity(mainIntent);
         finish();
     }

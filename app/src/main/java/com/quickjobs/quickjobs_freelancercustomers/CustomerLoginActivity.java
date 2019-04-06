@@ -67,6 +67,8 @@ public class CustomerLoginActivity extends AppCompatActivity {
                                     .getReference().child("Users").child("Customers").child(uid);
                             current_user_db.setValue(true);
                             Toast.makeText(CustomerLoginActivity.this,"Succesfully Registered",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(CustomerLoginActivity.this, CustomerProfileRegistrationActivity.class);
+                            startActivity(intent);
                         }else {
                             Toast.makeText(CustomerLoginActivity.this,"Error signing in",Toast.LENGTH_SHORT).show();
                         }
@@ -79,7 +81,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
         phlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CustomerLoginActivity.this,OTPVerificationActivityTwo.class));
+                startActivity(new Intent(CustomerLoginActivity.this,OTPVerificationActivity.class));
                 return;
             }
         });
