@@ -62,7 +62,7 @@ public class CustomerSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_settings);
-        
+
 
         mName = (EditText)findViewById(R.id.name);
         mPhone = (EditText)findViewById(R.id.phone);

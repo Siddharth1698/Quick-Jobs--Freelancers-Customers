@@ -14,8 +14,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -63,6 +66,8 @@ public class FreelancerProfileRegisterActivity extends AppCompatActivity {
         currentUserId = mAuth.getCurrentUser().getUid();
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile_images");
 
+
+
         createAccountButton = (Button)findViewById(R.id.profile_register_button);
 //        myToolbar = findViewById(R.id.my_profile_toolbar);
 //        if (myToolbar!=null) {
@@ -94,7 +99,6 @@ public class FreelancerProfileRegisterActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent,galleryPic);
             }
         });
-
 
 
         createAccountButton.setOnClickListener(new View.OnClickListener() {

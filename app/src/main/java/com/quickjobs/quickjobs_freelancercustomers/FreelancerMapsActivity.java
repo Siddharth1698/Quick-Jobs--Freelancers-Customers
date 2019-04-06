@@ -149,26 +149,6 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         updateFreelancerNavHeader();
 
 
-        String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-        FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(uidd).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
-
-                    startActivity(new Intent(FreelancerMapsActivity.this,FreelancerProfileRegisterActivity.class));
-
-                    return;
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
 
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         startstopbtns = (LinearLayout)findViewById(R.id.startstopbtns);

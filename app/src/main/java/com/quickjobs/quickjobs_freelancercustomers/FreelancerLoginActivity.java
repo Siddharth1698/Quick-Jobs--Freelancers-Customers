@@ -76,6 +76,8 @@ public class FreelancerLoginActivity extends AppCompatActivity {
                             DatabaseReference current_user_db = FirebaseDatabase.getInstance()
                                     .getReference().child("Users").child("Freelancers").child(uid).child("name");
                             current_user_db.setValue(email);
+                            Intent intent = new Intent(FreelancerLoginActivity.this, FreelancerProfileRegisterActivity.class);
+                            startActivity(intent);
                         }else {
                             Toast.makeText(FreelancerLoginActivity.this,"Error signing in",Toast.LENGTH_SHORT).show();
                         }
