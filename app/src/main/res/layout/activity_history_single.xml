@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@drawable/qjsgradient"
     android:layout_height="match_parent"
     tools:context="HistorySingleActivity"
     android:orientation="vertical">
@@ -29,6 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="From - To"
+                android:textStyle="bold"
                 android:layout_marginBottom="20sp"
                 android:id="@+id/rideLocation"/>
             <TextView
@@ -47,6 +49,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_marginLeft="10dp"
             android:layout_height="wrap_content"
             android:id="@+id/dethist"
             android:orientation="horizontal">
@@ -66,6 +69,7 @@
                     android:layout_height="wrap_content"
                     android:text="name"
                     android:layout_marginBottom="20sp"
+                    android:textStyle="bold"
                     android:id="@+id/userName"/>
                 <TextView
                     android:layout_width="match_parent"

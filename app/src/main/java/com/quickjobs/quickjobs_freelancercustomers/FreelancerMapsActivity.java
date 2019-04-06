@@ -109,7 +109,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelancers_maps);
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -137,15 +137,17 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-
-        mapFragment.getMapAsync(this);
-
-        updateFreelancerNavHeader();
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.CALL_PHONE,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE).withListener(new MultiplePermissionsListener() {
             @Override public void onPermissionsChecked(MultiplePermissionsReport report) {/* ... */}
             @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
         }).check();
+
+
+        mapFragment.getMapAsync(this);
+
+        updateFreelancerNavHeader();
+
 
         String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
 
