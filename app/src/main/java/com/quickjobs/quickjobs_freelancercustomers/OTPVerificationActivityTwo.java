@@ -17,6 +17,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hbb20.CountryCodePicker;
 
 import java.util.concurrent.TimeUnit;
@@ -166,7 +170,31 @@ public class OTPVerificationActivityTwo extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             loadingBar.dismiss();
                             Toast.makeText(OTPVerificationActivityTwo.this,"You are in...",Toast.LENGTH_SHORT);
-                            SendUserToMainActivity();
+
+                            String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                            FirebaseDatabase.getInstance().getReference().child("Users").child("Freelancers").child(uidd).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists() && dataSnapshot.getChildrenCount()<3){
+
+                                        startActivity(new Intent(OTPVerificationActivityTwo.this,FreelancerProfileRegisterActivity.class));
+                                        finish();
+                                    }else {
+                                        SendUserToMainActivity();
+                                        finish();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+
+
 
 
 
