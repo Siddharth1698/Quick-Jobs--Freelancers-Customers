@@ -60,7 +60,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
             @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {/* ... */}
         }).check();
 
-        
+
         mEmail = (EditText)findViewById(R.id.emailCustomer);
         mPassword = (EditText) findViewById(R.id.passwordCustomer);
         mLogin = (Button)findViewById(R.id.loginCustomerBtn);
