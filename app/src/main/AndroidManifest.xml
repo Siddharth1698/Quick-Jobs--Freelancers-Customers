@@ -20,7 +20,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PaymentGatewayActivity"></activity>
+        <activity android:name=".PaymentGatewayActivity"
+            android:parentActivityName=".VerifyActivity">
+
+        </activity>
         <activity
             android:name=".LocalJobsCustomersActivity"
             android:label="@string/title_activity_local_jobs_customers" />

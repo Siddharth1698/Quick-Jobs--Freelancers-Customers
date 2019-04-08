@@ -69,28 +69,38 @@ public class CustomerLoginActivity extends AppCompatActivity {
 
 
 
+
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 email = mEmail.getText().toString();
                 password = mPassword.getText().toString();
-                auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(CustomerLoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @SuppressLint("RestrictedApi")
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            uid = auth.getUid();
-                            DatabaseReference current_user_db = FirebaseDatabase.getInstance()
-                                    .getReference().child("Users").child("Customers").child(uid);
-                            current_user_db.setValue(true);
-                            Toast.makeText(CustomerLoginActivity.this,"Succesfully Registered",Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CustomerLoginActivity.this, CustomerProfileRegistrationActivity.class);
-                            startActivity(intent);
-                        }else {
-                            Toast.makeText(CustomerLoginActivity.this,"Error signing in",Toast.LENGTH_SHORT).show();
+
+                if (email.isEmpty() && password.isEmpty() || email.isEmpty() || password.isEmpty()){
+
+                    Toast.makeText(CustomerLoginActivity.this,"Please enter details",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(CustomerLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        @SuppressLint("RestrictedApi")
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                uid = auth.getUid();
+                                DatabaseReference current_user_db = FirebaseDatabase.getInstance()
+                                        .getReference().child("Users").child("Customers").child(uid);
+                                current_user_db.setValue(true);
+                                Toast.makeText(CustomerLoginActivity.this,"Succesfully Registered",Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(CustomerLoginActivity.this, CustomerProfileRegistrationActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(CustomerLoginActivity.this,"Error signing in",Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+
+                }
+
 
             }
         });
@@ -107,6 +117,9 @@ public class CustomerLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = mEmail.getText().toString();
                 password = mPassword.getText().toString();
+                if (email.isEmpty() && password.isEmpty() || email.isEmpty() || password.isEmpty()){
+                    Toast.makeText(CustomerLoginActivity.this,"Please enter details",Toast.LENGTH_SHORT).show();
+                }else {
                 auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(CustomerLoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -118,7 +131,7 @@ public class CustomerLoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
+            }}
         });
 
 

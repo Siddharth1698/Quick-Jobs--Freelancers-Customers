@@ -571,7 +571,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
                     pickupLatLng = new LatLng(locationLat,locationLng);
 
-                    pickUpMarker = mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("Pickup Location").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pickupp)));
+                    pickUpMarker = mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("Pickup Location"));
 
                     getRouteToMarkder(pickupLatLng);
 
