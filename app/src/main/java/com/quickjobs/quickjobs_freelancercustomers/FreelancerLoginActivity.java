@@ -82,6 +82,10 @@ public class FreelancerLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = mEmail.getText().toString();
                 password = mPassword.getText().toString();
+                if (email.isEmpty() && password.isEmpty() || email.isEmpty() || password.isEmpty()){
+
+                    Toast.makeText(FreelancerLoginActivity.this,"Please enter details",Toast.LENGTH_SHORT).show();
+                }else {
                 auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(FreelancerLoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @SuppressLint("RestrictedApi")
                     @Override
@@ -97,7 +101,7 @@ public class FreelancerLoginActivity extends AppCompatActivity {
                             Toast.makeText(FreelancerLoginActivity.this,"Error signing in",Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
+                });}
 
             }
         });
@@ -107,6 +111,10 @@ public class FreelancerLoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = mEmail.getText().toString();
                 password = mPassword.getText().toString();
+                if (email.isEmpty() && password.isEmpty() || email.isEmpty() || password.isEmpty()){
+
+                    Toast.makeText(FreelancerLoginActivity.this,"Please enter details",Toast.LENGTH_SHORT).show();
+                }else {
                 auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(FreelancerLoginActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -117,7 +125,7 @@ public class FreelancerLoginActivity extends AppCompatActivity {
                         }
                     }
                 });
-            }
+            }}
         });
 
 
