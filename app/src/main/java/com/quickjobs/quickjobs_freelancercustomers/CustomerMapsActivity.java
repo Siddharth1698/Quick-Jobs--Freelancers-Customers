@@ -362,153 +362,160 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
                         final String userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         jobDesc = (EditText) alertLayout.findViewById(R.id.job_desc);
                         job = jobDesc.getText().toString();
-                        FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userid).child("CustomerRequestDescs").setValue(job);
 
-                        if (requestbol) {
-
-                            endJob();
-
-
-                        } else {
-
-                            requestbol = true;
-
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userid).child("location");
-
-                            GeoFire geoFire = new GeoFire(ref);
-                            geoFire.setLocation(userid, new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
-
-                            pickuplocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                            pickupMarker = mMap.addMarker(new MarkerOptions().position(pickuplocation).title("I AM HERE"));
-
-                            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        if (job.isEmpty()){
+                            Toast.makeText(CustomerMapsActivity.this,"Enter job",Toast.LENGTH_SHORT).show();
+                        }else {
 
 
-                            FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").setValue(job);
-                            request.setText("Getting your freelancer...");
-                            getClosestFreelancer();
-                            FirebaseDatabase.getInstance().getReference().child("Chats").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(userid).child("CustomerRequestDescs").setValue(job);
 
-                                    if (dataSnapshot.exists()) {
-                                        customerChatBtn.setVisibility(View.VISIBLE);
+                            if (requestbol) {
+
+                                endJob();
+
+
+                            } else {
+
+                                requestbol = true;
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userid).child("location");
+
+                                GeoFire geoFire = new GeoFire(ref);
+                                geoFire.setLocation(userid, new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+
+                                pickuplocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                                pickupMarker = mMap.addMarker(new MarkerOptions().position(pickuplocation).title("I AM HERE"));
+
+                                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
+                                FirebaseDatabase.getInstance().getReference("CustomerRequests").child(userId).child("CustomerRequestDescs").setValue(job);
+                                request.setText("Getting your freelancer...");
+                                getClosestFreelancer();
+                                FirebaseDatabase.getInstance().getReference().child("Chats").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                        if (dataSnapshot.exists()) {
+                                            customerChatBtn.setVisibility(View.VISIBLE);
+                                        }
+
+
                                     }
 
-
-                                }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.exists()) {
-                                        customerChatBtn.setVisibility(View.VISIBLE);
-                                    }
-                                }
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        customerChatBtn.setVisibility(View.GONE);
-                                    }
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
-
-
-                            FirebaseDatabase.getInstance().getReference().child("CustomerRequests").child(customerId).addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-
-                                }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                                    mFreelancerInfo.setVisibility(View.GONE);
-                                    if (freelancerMarker != null){
-                                        freelancerMarker.remove();
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                        if (dataSnapshot.exists()) {
+                                            customerChatBtn.setVisibility(View.VISIBLE);
+                                        }
                                     }
 
-                                    request.setText("Get Things Done");
-                                    Toast.makeText(CustomerMapsActivity.this,"Sorry... Freelancer canceled your request",Toast.LENGTH_SHORT);
-                                    Toast.makeText(getApplicationContext(), "Freelancer cancelled your request...", Toast.LENGTH_SHORT);
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                        if (dataSnapshot.exists()) {
+                                            customerChatBtn.setVisibility(View.GONE);
+                                        }
+                                    }
 
-                                }
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                                    }
 
-                                }
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                                    }
+                                });
 
-                                }
-                            });
 
-                            FirebaseDatabase.getInstance().getReference().child("JobStatus").addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.exists()) {
-                                        if (dataSnapshot.getValue().toString().equals("1")) {
-                                            customerVerifyBtn.setVisibility(View.VISIBLE);
-                                        } else {
-                                            if (dataSnapshot.exists()) {
+                                FirebaseDatabase.getInstance().getReference().child("CustomerRequests").child(customerId).addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                        mFreelancerInfo.setVisibility(View.GONE);
+                                        if (freelancerMarker != null) {
+                                            freelancerMarker.remove();
+                                        }
+
+                                        request.setText("Get Things Done");
+                                        Toast.makeText(CustomerMapsActivity.this, "Sorry... Freelancer canceled your request", Toast.LENGTH_SHORT);
+                                        Toast.makeText(getApplicationContext(), "Freelancer cancelled your request...", Toast.LENGTH_SHORT);
+
+                                    }
+
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+
+                                FirebaseDatabase.getInstance().getReference().child("JobStatus").addChildEventListener(new ChildEventListener() {
+                                    @Override
+                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                        if (dataSnapshot.exists()) {
+                                            if (dataSnapshot.getValue().toString().equals("1")) {
+                                                customerVerifyBtn.setVisibility(View.VISIBLE);
+                                            } else {
+                                                if (dataSnapshot.exists()) {
+                                                    customerVerifyBtn.setVisibility(View.GONE);
+                                                }
+
+                                            }
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                        if (dataSnapshot.exists()) {
+                                            if (dataSnapshot.getValue().toString().equals("1")) {
+                                                customerVerifyBtn.setVisibility(View.VISIBLE);
+                                            } else {
                                                 customerVerifyBtn.setVisibility(View.GONE);
                                             }
 
                                         }
+                                    }
+
+                                    @Override
+                                    public void onChildRemoved(DataSnapshot dataSnapshot) {
 
                                     }
-                                }
 
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.exists()) {
-                                        if (dataSnapshot.getValue().toString().equals("1")) {
-                                            customerVerifyBtn.setVisibility(View.VISIBLE);
-                                        } else {
-                                            customerVerifyBtn.setVisibility(View.GONE);
-                                        }
+                                    @Override
+                                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
                                     }
-                                }
 
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
 
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                            });
+                                    }
+                                });
 
 
+                            }
+
+
+                            dialog.cancel();
                         }
-
-
-                        dialog.cancel();
                     }
                 });
 

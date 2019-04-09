@@ -189,7 +189,7 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(CustomerProfileRegistrationActivity.this, "Image saved in db succesfully", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CustomerProfileRegistrationActivity.this, "Image saved succesfully", Toast.LENGTH_SHORT).show();
                                         ((CircleImageView) findViewById(R.id.profile_register_picture)).setImageURI(resultUri);
                                         RootRef.child("Users").child("Customers").child(currentUserId).child("profileImageUrl").setValue(downloadUrl);
                                         Picasso.get().load(resultUri).into(prof_reg_pic);

@@ -56,10 +56,9 @@ public class CustomerHistoryLJAdapter  extends RecyclerView.Adapter<CustomerHist
                 String location = itemList.get(position).getLocation();
                 String category = itemList.get(position).getCat();
                 String ridekey = itemList.get(position).getRidekey();
-                Toast.makeText(context,"hello",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context,"Job Completed",Toast.LENGTH_SHORT).show();
                 FirebaseDatabase.getInstance().getReference().child("LocalJobsHistory").child(ridekey).removeValue();
                 FirebaseDatabase.getInstance().getReference().child("LocalJobs").child(location).child(category).child(ridekey).removeValue();
-
                 itemList.remove(position);
                 notifyItemRemoved(position);
                 return false;
