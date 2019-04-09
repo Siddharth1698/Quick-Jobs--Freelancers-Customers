@@ -39,10 +39,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         buttonNext.setOnClickListener(this);
         buttonPrevious.setOnClickListener(this);
-
-
-
-
     }
 
     private void mDotsIndicator(int position){

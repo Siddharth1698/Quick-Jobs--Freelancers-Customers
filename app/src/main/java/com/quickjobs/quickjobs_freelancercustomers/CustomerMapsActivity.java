@@ -748,8 +748,8 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
         }
 
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setInterval(3000);
+        mLocationRequest.setFastestInterval(3000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
@@ -776,7 +776,7 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(15));
                    
 
 //                    if(!getDriversAroundStarted)

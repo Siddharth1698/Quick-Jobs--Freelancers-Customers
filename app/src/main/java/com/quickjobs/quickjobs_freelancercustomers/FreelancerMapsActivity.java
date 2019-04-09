@@ -116,16 +116,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_freelancers_maps);
-
-
-
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-
-
-
-
         androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -137,6 +128,16 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerview = navigationView.getHeaderView(0);
+        ImageView profilename = (ImageView) headerview.findViewById(R.id.navImage);
+        profilename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(FreelancerMapsActivity.this,FreelancerSettingsActivity.class));
+                return;
+            }
+        });
         userNameNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navName);
         userImageNav = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.navImage);
         userPhoneNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navPhone);
@@ -606,8 +607,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
         }
         mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(1000);
-        mLocationRequest.setFastestInterval(1000);
+        mLocationRequest.setInterval(3000);
+        mLocationRequest.setFastestInterval(3000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
