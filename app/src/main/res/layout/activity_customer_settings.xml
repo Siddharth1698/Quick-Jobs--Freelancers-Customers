@@ -9,7 +9,7 @@
     android:padding="20sp"
     android:background="@drawable/qjsgradient">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:src="@drawable/defaultavatar"
         android:layout_width="120sp"
         android:layout_height="120sp"
