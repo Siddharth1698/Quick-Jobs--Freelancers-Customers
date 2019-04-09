@@ -61,6 +61,7 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
         RootRef = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
+        loadingBar = new ProgressDialog(this);
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile_images");
 
         createAccountButton = (Button)findViewById(R.id.profile_register_button);
@@ -124,8 +125,6 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
         }
         else{
 
-
-
             String currentUserId = mAuth.getCurrentUser().getUid();
 
             HashMap<String,String> profileMap = new HashMap<>();
@@ -170,6 +169,12 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
             final CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode == RESULT_OK) {
 
+                loadingBar.setTitle("Image");
+                loadingBar.setMessage("Image Uploading . Please wait.");
+                loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.show();
+
+
 
                 final Uri resultUri = result.getUri();
                 StorageReference filepath = UserProfileImageRef.child(currentUserId + ".jpg");
@@ -189,16 +194,19 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
                                         RootRef.child("Users").child("Customers").child(currentUserId).child("profileImageUrl").setValue(downloadUrl);
                                         Picasso.get().load(resultUri).into(prof_reg_pic);
                                         imageurl = downloadUrl;
+                                        loadingBar.dismiss();
 
 
                                     } else {
                                         Toast.makeText(CustomerProfileRegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                        loadingBar.dismiss();
 
                                     }
                                 }
                             });
                         } else {
                             Toast.makeText(CustomerProfileRegistrationActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            loadingBar.dismiss();
 
 
                         }
