@@ -64,6 +64,7 @@ public class FreelancerProfileRegisterActivity extends AppCompatActivity {
         RootRef = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
+        loadingBar = new ProgressDialog(this);
         UserProfileImageRef = FirebaseStorage.getInstance().getReference().child("profile_images");
 
 
@@ -174,6 +175,11 @@ public class FreelancerProfileRegisterActivity extends AppCompatActivity {
             final CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if(resultCode == RESULT_OK) {
 
+                loadingBar.setTitle("Image");
+                loadingBar.setMessage("Image Uploading . Please wait.");
+                loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.show();
+
 
                 final Uri resultUri = result.getUri();
                 StorageReference filepath = UserProfileImageRef.child(currentUserId + ".jpg");
@@ -193,17 +199,17 @@ public class FreelancerProfileRegisterActivity extends AppCompatActivity {
                                         RootRef.child("Users").child("Freelancers").child(currentUserId).child("profileImageUrl").setValue(downloadUrl);
                                         Picasso.get().load(resultUri).into(prof_reg_pic);
                                         imageurl = downloadUrl;
-
+                                        loadingBar.dismiss();
 
                                     } else {
                                         Toast.makeText(FreelancerProfileRegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-
+                                        loadingBar.dismiss();
                                     }
                                 }
                             });
                         } else {
                             Toast.makeText(FreelancerProfileRegisterActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
-
+                            loadingBar.dismiss();
 
                         }
                     }
