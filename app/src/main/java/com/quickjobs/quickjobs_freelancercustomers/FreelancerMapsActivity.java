@@ -581,7 +581,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
             lastLatLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
             if (pickupLatLng != null && mLastLocation != null){
             Routing routing = new Routing.Builder()
-                    .key("AIzaSyAUHvnkNCxNZgu4FiCTPV4AxZRzyZltPYU")
+                    .key("AIzaSyBq0F1wcpTv0gUEGd4JCY8_S4N6AoshBLg")
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
                     .withListener(this)
                     .alternativeRoutes(false)

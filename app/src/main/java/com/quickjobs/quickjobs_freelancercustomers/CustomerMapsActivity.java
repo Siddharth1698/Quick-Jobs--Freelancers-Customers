@@ -146,8 +146,6 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
         mapFragment.getMapAsync(this);
 
-
-
         String uidd =  FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
