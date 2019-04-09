@@ -3,76 +3,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.CustomerHomeFragment">
+    tools:context=".Fragments.CustomerHomeFragment"
+    android:background="@drawable/qjsgradient">
 
 
 <androidx.cardview.widget.CardView
     android:layout_width="match_parent"
     android:layout_margin="15dp"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <!-- TODO: Update blank fragment layout -->
 
 
-
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/custjobtitle"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/roundbox"
                 android:hint="Enter job title"
+                android:textAlignment="center" />
 
-                />
             <EditText
-                android:layout_below="@+id/custjobtitle"
-                android:hint="Job details here"
                 android:id="@+id/custjobdetails"
-                android:layout_margin="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="168dp" />
+                android:layout_height="80dp"
+                android:layout_below="@+id/custjobtitle"
+                android:layout_margin="5dp"
+                android:background="@drawable/roundbox"
+                android:hint="Job details here"
+                android:textAlignment="center" />
 
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:id="@+id/custphonenumber"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/roundbox"
+                android:hint="Phone number for contact"
                 android:inputType="number"
-                android:hint="Phone number for contact"/>
+                android:textAlignment="center" />
 
             <Spinner
                 android:id="@+id/spinner1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/roundbox"
                 android:entries="@array/job_categories"
-                android:prompt="@string/country_prompt" />
+                android:prompt="@string/country_prompt"
+                android:textAlignment="center" />
 
-                    <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                        android:id="@+id/custlocjob"
-                    android:hint="Location:"/>
-
-
-
-
-
+            <EditText
+                android:id="@+id/custlocjob"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/roundbox"
+                android:hint="Location:"
+                android:textAlignment="center" />
 
 
             <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/roundbox"
                 android:text="Submit" />
 
         </LinearLayout>
