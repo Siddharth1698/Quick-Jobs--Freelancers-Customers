@@ -145,9 +145,7 @@ public class FreelancerProfileRegisterActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Intent registerIntent = new Intent(FreelancerProfileRegisterActivity.this,FreelancerMapsActivity.class);
-                        registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(registerIntent);
-                        finish();
                         Toast.makeText(FreelancerProfileRegisterActivity.this,"Account Created Succesfully",Toast.LENGTH_SHORT);
 
                     }else {
