@@ -2,6 +2,7 @@ package com.quickjobs.quickjobs_freelancercustomers;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -41,6 +42,7 @@ public class CustomerSettingsActivity extends AppCompatActivity {
     private Button mConfirm,mBack;
     private FirebaseAuth auth;
     private DatabaseReference mCustomerDatabase;
+    private ProgressDialog loadingBar;
     private String userId;
     private String name,phone,address;
     private ImageView mProfileImage;
@@ -68,6 +70,7 @@ public class CustomerSettingsActivity extends AppCompatActivity {
         mName = (EditText)findViewById(R.id.name);
         mPhone = (EditText)findViewById(R.id.phone);
         mConfirm = (Button)findViewById(R.id.confirm);
+        loadingBar = new ProgressDialog(this);
         mAddress = (EditText) findViewById(R.id.address);
         mBack = (Button)findViewById(R.id.back);
         mProfileImage = (ImageView)findViewById(R.id.profileimage);
@@ -161,6 +164,10 @@ public class CustomerSettingsActivity extends AppCompatActivity {
         userInfo.put("phone",phone);
         mCustomerDatabase.updateChildren(userInfo);
         if (resultUri != null) {
+            loadingBar.setTitle("Updating..");
+            loadingBar.setMessage("Updating your account. Please wait..");
+            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.show();
 
             StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profile_images").child(userId);
             Bitmap bitmap = null;
@@ -180,6 +187,7 @@ public class CustomerSettingsActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(CustomerSettingsActivity.this,"Some Error Occured",Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
                     finish();
                     return;
                 }
@@ -191,6 +199,7 @@ public class CustomerSettingsActivity extends AppCompatActivity {
                     Map newImage = new HashMap();
                     newImage.put("profileImageUrl",downloadUri.toString());
                     mCustomerDatabase.updateChildren(newImage);
+                    loadingBar.dismiss();
                     finish();
                     return;
                 }

@@ -1,6 +1,7 @@
 package com.quickjobs.quickjobs_freelancercustomers;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -37,6 +38,7 @@ public class FreelancerSettingsActivity extends AppCompatActivity {
     private EditText mName,mPhone,mAddressFeild;
     private Button mConfirm,mBack;
     private FirebaseAuth auth;
+    private ProgressDialog loadingBar;
     private DatabaseReference mFreelancersDatabase;
     private String userId;
     private String name,phone;
@@ -65,6 +67,7 @@ public class FreelancerSettingsActivity extends AppCompatActivity {
 
         mName = (EditText)findViewById(R.id.name);
         mPhone = (EditText)findViewById(R.id.phone);
+        loadingBar = new ProgressDialog(this);
         mConfirm = (Button)findViewById(R.id.confirm);
         mBack = (Button)findViewById(R.id.back);
         mAddressFeild = (EditText)findViewById(R.id.address);
@@ -142,6 +145,11 @@ public class FreelancerSettingsActivity extends AppCompatActivity {
         mFreelancersDatabase.updateChildren(userInfo);
         if (resultUri != null) {
 
+            loadingBar.setTitle("Updating..");
+            loadingBar.setMessage("Updating your account. Please wait..");
+            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.show();
+
             StorageReference filepath = FirebaseStorage.getInstance().getReference().child("profile_images").child(userId);
             Bitmap bitmap = null;
             try {
@@ -160,6 +168,7 @@ public class FreelancerSettingsActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(FreelancerSettingsActivity.this,"Some Error Occured",Toast.LENGTH_SHORT).show();
+                    loadingBar.dismiss();
                     finish();
                     return;
                 }
@@ -171,6 +180,7 @@ public class FreelancerSettingsActivity extends AppCompatActivity {
                     Map newImage = new HashMap();
                     newImage.put("profileImageUrl",downloadUri.toString());
                     mFreelancersDatabase.updateChildren(newImage);
+                    loadingBar.dismiss();
                     finish();
                     return;
                 }
