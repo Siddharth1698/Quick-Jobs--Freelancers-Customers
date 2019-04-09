@@ -9,9 +9,9 @@
 
     tools:context=".OTPVerificationActivityTwo">
     <LinearLayout
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="250dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_width="match_parent"
         android:id="@+id/phno"
         android:layout_height="wrap_content"
@@ -20,16 +20,18 @@
         <com.hbb20.CountryCodePicker
             android:id="@+id/ccp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             app:ccp_countryPreference="us,in"
+            android:background="@drawable/roundbox"
             />
 
         <EditText
             android:id="@+id/phone_number_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:editable="false"
-            android:hint="phone"
+            android:layout_height="40dp"
+            android:hint="Enter your Phone"
+            android:textAlignment="center"
+            android:background="@drawable/roundbox"
             android:inputType="phone"
             android:singleLine="true" />
     </LinearLayout>
@@ -40,18 +42,19 @@
         android:id="@+id/pinview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:pinWidth="35dp"
-        app:pinHeight="40dp"
+        app:pinWidth="30dp"
+        app:pinHeight="30dp"
         app:pinLength="6"
         android:layout_below="@+id/phno"
+        android:background="@drawable/roundbox"
 
         app:cursorVisible="false"
         app:forceKeyboard="true"
-        app:hint="0"
+        app:hint="-"
 
         android:layout_alignParentStart="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="4dp"
         android:visibility="invisible"
 
@@ -64,15 +67,13 @@
         android:id="@+id/send_verification_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#57335E"
-        android:text="Send Verification Code"
         android:layout_below="@+id/pinview1"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginTop="4dp"
-        android:textSize="19sp"
-        android:textColor="@android:color/background_light"
-        />
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="-50dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/roundbox"
+        android:text="Send Verification Code"
+        android:textSize="19sp" />
 
     <Button
         android:id="@+id/verify_button"
@@ -80,14 +81,12 @@
         android:layout_height="wrap_content"
         android:text="Verify"
         android:layout_below="@+id/send_verification_button"
-        android:layout_marginStart="17dp"
-        android:layout_marginEnd="17dp"
-        android:background="#57335E"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:background="@drawable/roundbox"
         android:layout_marginTop="4dp"
-
         android:visibility="invisible"
         android:textSize="19sp"
-        android:textColor="@android:color/background_light"
         />
 
 </RelativeLayout>
