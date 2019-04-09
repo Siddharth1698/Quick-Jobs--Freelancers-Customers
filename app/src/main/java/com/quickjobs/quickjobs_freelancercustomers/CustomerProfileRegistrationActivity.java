@@ -141,7 +141,9 @@ public class CustomerProfileRegistrationActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Intent registerIntent = new Intent(CustomerProfileRegistrationActivity.this,CustomerMapsActivity.class);
+                        registerIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(registerIntent);
+                        finish();
                         Toast.makeText(CustomerProfileRegistrationActivity.this,"Account Created Succesfully",Toast.LENGTH_SHORT);
 
                     }else {
