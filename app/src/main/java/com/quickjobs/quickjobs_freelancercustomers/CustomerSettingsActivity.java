@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,12 +37,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CustomerSettingsActivity extends AppCompatActivity {
-    private EditText mName,mPhone;
+    private EditText mName,mPhone,mAddress;
     private Button mConfirm,mBack;
     private FirebaseAuth auth;
     private DatabaseReference mCustomerDatabase;
     private String userId;
-    private String name,phone;
+    private String name,phone,address;
     private ImageView mProfileImage;
     private Uri resultUri;
     private String profileImageUrl;
@@ -67,6 +68,7 @@ public class CustomerSettingsActivity extends AppCompatActivity {
         mName = (EditText)findViewById(R.id.name);
         mPhone = (EditText)findViewById(R.id.phone);
         mConfirm = (Button)findViewById(R.id.confirm);
+        mAddress = (EditText) findViewById(R.id.address);
         mBack = (Button)findViewById(R.id.back);
         mProfileImage = (ImageView)findViewById(R.id.profileimage);
         auth = FirebaseAuth.getInstance();
@@ -132,6 +134,10 @@ public class CustomerSettingsActivity extends AppCompatActivity {
                     if (map.get("phone")!=null){
                         phone = map.get("phone").toString();
                         mPhone.setText(phone);
+                    }
+                    if (map.get("address")!=null){
+                        address = map.get("address").toString();
+                        mAddress.setText(address);
                     }
                     if (map.get("profileImageUrl")!=null){
                         profileImageUrl = map.get("profileImageUrl").toString();

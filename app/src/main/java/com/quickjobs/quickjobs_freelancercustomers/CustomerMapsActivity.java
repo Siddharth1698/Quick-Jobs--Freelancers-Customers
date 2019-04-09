@@ -130,6 +130,15 @@ public class CustomerMapsActivity extends AppCompatActivity implements OnMapRead
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerview = navigationView.getHeaderView(0);
+        ImageView profilename = (ImageView) headerview.findViewById(R.id.navImage);
+        profilename.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CustomerMapsActivity.this,CustomerSettingsActivity.class));
+                return;
+            }
+        });
         userNameNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navName);
         userImageNav = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.navImage);
         userPhoneNav = (TextView)navigationView.getHeaderView(0).findViewById(R.id.navPhone);

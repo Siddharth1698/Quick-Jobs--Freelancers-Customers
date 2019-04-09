@@ -35,7 +35,7 @@
         android:id="@+id/profile_register_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        
+        android:inputType="number"
         android:layout_below="@id/profile_register_name"
         android:hint="pH NO HERE"
         android:textAlignment="center" />
