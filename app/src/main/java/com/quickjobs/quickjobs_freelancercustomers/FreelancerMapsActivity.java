@@ -146,15 +146,8 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-
-
-
         mapFragment.getMapAsync(this);
-
         updateFreelancerNavHeader();
-
-
-
 
         userid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         startstopbtns = (LinearLayout)findViewById(R.id.startstopbtns);
@@ -249,15 +242,7 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
 
             }
         });
-
-
-
-
         getAssignedCustomer();
-
-
-
-
     }
 
     private void connectFreelancer() {
@@ -282,8 +267,6 @@ public class FreelancerMapsActivity extends AppCompatActivity implements OnMapRe
                            userNameNav.setText(name);
                            userPhoneNav.setText(phone);
                            Picasso.get().load(image).into(userImageNav);
-
-
                        }
             }
 
