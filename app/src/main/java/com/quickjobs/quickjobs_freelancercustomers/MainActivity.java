@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,FreelancerLoginActivity.class);
                 startActivity(intent);
-                finish();
                 return;
             }
         });
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,CustomerLoginActivity.class);
                 startActivity(intent);
-                finish();
                 return;
             }
         });
