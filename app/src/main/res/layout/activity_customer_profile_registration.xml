@@ -11,76 +11,114 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_register_picture"
-        android:layout_width="131dp"
-        android:layout_height="150dp"
-        android:layout_below="@id/profile_register_toolbar"
-        android:layout_marginLeft="150dp"
-        android:layout_marginTop="45dp"
-        android:src="@drawable/defaultavatar" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:id="@+id/cieclid"
+            android:layout_marginTop="100dp"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/profile_register_name"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_below="@+id/profile_register_picture"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="39dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/roundbox"
-        android:hint="Enter your name"
-        android:textAlignment="center" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_register_picture"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_below="@id/profile_register_toolbar"
+                android:layout_gravity="center"
+                android:src="@drawable/defaultavatar" />
 
 
-    <EditText
-        android:id="@+id/profile_register_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_below="@id/profile_register_name"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="@drawable/roundbox"
-        android:fontFamily="@font/slabo_13px"
-        android:hint="Add your Phone"
-        android:textAlignment="center" />
+        </LinearLayout>
 
 
-    <EditText
-        android:id="@+id/profile_register_address"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_below="@+id/profile_register_phone"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/roundbox"
-        android:hint="Address"
-        android:textAlignment="center" />
+        <LinearLayout
+            android:layout_below="@+id/cieclid"
+            android:gravity="center"
 
-    <Button
-        android:id="@+id/profile_register_button"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_below="@+id/profile_register_address"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="100dp"
-        android:background="@drawable/roundbox"
-        android:text="Get Things Done"
-        android:textAllCaps="false"
-        android:textStyle="bold" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+            <EditText
+                android:id="@+id/profile_register_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="39dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/roundbox"
+                android:hint="Enter your name"
+                android:textAlignment="center" />
+
+
+            <EditText
+                android:id="@+id/profile_register_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_register_name"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:inputType="number"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/roundbox"
+                android:fontFamily="@font/slabo_13px"
+                android:hint="Add your Phone"
+                android:textAlignment="center" />
+
+
+            <EditText
+                android:id="@+id/profile_register_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_register_phone"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/roundbox"
+                android:hint="Address"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/profile_register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/profile_register_address"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="100dp"
+                android:background="@drawable/roundbox"
+                android:text="Get Things Done"
+                android:textAllCaps="false"
+                android:textStyle="bold" />
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
+
+
 
 
 

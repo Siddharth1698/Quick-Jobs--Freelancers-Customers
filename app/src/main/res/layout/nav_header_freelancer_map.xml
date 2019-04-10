@@ -19,8 +19,8 @@
         android:layout_height="96dp"
         android:contentDescription="@string/nav_header_desc"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/workicon" />
-
+        android:src="@drawable/qjlogoapp"
+        />
     <TextView
         android:layout_gravity="center"
         android:layout_marginTop="2dp"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/navName"
         android:paddingTop="4dp"
-        android:text="Freelancer"
+        android:text="User Name"
         android:textStyle="bold"/>
 
     <TextView
